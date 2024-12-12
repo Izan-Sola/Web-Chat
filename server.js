@@ -55,7 +55,7 @@ webSocketServer.on("request", function (req) {
     }
 });
 
-server.listen(3000, 'IPHERE', () => {
+server.listen(3000, '172.30.135.220', () => {
     console.log('Server started')
 })
 

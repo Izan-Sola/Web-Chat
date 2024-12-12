@@ -10,17 +10,19 @@
     <script src='main.js'></script>
     <title> Web Chat </title>
 </head>
-<header>
-    <nav id="options-menu">
-        <ul id="options-list">
-            <li id="showprofiles-option"> Show Profiles </li>
-            <li id="showfriends-option"> Show FriendList </li>
-            <li id=""> PLACEHOLDER </li>
-            <li id=""> PLACEHOLDER </li>
-        </ul>
-    </nav>
-</header>
+
 <body>
+    <header>
+        <nav id="options-menu">
+            <ul id="options-list">
+                <li id="showprofiles-option"> Show Profiles </li>
+                <li id="showfriends-option"> Show FriendList </li>
+                <li id=""> Switch Chat </li>
+                <li id=""> PLACEHOLDER </li>
+            </ul>
+        </nav>
+    </header>
+
     <div id="loginScreen">
         <h1> Login with your user</h1>
         <input type="text" id="username" placeholder="Enter your username">
@@ -36,11 +38,29 @@
         <input type="button" id="setUser" value="Create user">
     </div>
 
+    <div id="globalchat-section">
+        <h1 id="globalchat-title"> Global Chat <br> Talk with everybody online </h1>
+        <div id="globalChat"></div>
+        <textarea id="text"></textarea>
+        <input type="button" id="send" value="< Send">
+    </div>
 
-    <h1 id="globalchat-title"> Global Chat <br> Talk with everybody online </h1>
-    <div id="globalChat"></div>
-    <textarea id="text"></textarea>
-    <input type="button" id="send" value="< Send">
+    <div id="notifications-section">
+        <h2 id="notifications-title"> (-- NOTIFICATIONS --) </h2>
+        <nav id="notifications-tabs">
+            <ul>
+                <li id="friendreq-tab"> Friend Requests </li>
+                <li id="messages-tab"> New Messages </li>
+                <li id=""> GLOBAL </li>
+            </ul>
+        </nav>
+        <!-- <ul id="notifications-friendreq">
+                <li></li>
+            </ul> 
+            
+            -->
+
+    </div>
 
     <div id="profiles-section">
         <div id="profile">
@@ -53,6 +73,7 @@
             <input type="button" id="edit-profiledesc" value="Edit description">
             <input type="button" id="save-profile" value="Save changes">
         </div>
+
         <div id="stranger-profile">
             <h1 id="stranger-profilename">stranger name</h1>
             <h2 id="stranger-profileage">stranger age</h2>
@@ -74,16 +95,6 @@ Click on the name of an user in the chat to display the profile of that user.
             <li id=""> [Someone] - Status: <b> Offline </b> </li>
             <li id=""> ANOTHER FRIEND HERE</li>
             <li id=""> ANOTHER FRIEND HERE</li>
-            <li id=""> ANOTHER FRIEND HERE</li>
-            <li id=""> ANOTHER FRIEND HERE</li>
-            <li id=""> ANOTHER FRIEND HERE</li>
-            <li id=""> ANOTHER FRIEND HERE</li>
-            <li id=""> ANOTHER FRIEND HERE</li>
-            <li id=""> ANOTHER FRIEND HERE</li>
-            <li id=""> ANOTHER FRIEND HERE</li>
-            <li id=""> ANOTHER FRIEND HERE</li>
-            <li id=""> ANOTHER FRIEND HERE</li>
-
         </ul>
 
     </div>
