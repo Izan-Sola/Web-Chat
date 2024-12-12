@@ -1,0 +1,168 @@
+#globalChat {
+    border: 3px black solid;
+    width: 400px;
+    height: 525px;
+    overflow: scroll;
+    overflow-wrap: break-word;
+    margin-top: 30px;
+    resize: vertical;
+}
+
+#text {
+    margin-top: 10px;
+    width: 275px;
+    height: 40px;
+}
+
+#send {
+    position: relative;
+    top: -20px;
+    width: 125px;
+    height: 45px;
+}
+
+#loginScreen {
+    visibility: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.76);
+    z-index: 3;
+
+    h1 {
+        position: relative;
+        color: white;
+        left: 200px;
+        top: 180px;
+    }
+    input {
+       position: relative;
+       left: 200px;
+       top: 200px;
+    }
+}
+
+#register {
+    visibility: hidden;
+    position: absolute;
+    z-index: 3;
+    left: 200px;
+    top: 350px;
+
+    h1 {
+        color: white;
+    }
+}
+
+#profiles-section {
+    position: absolute;
+    left: 500px;
+    top: 75px;
+}
+
+#profile-description, #stranger-profiledesc, #profile-age {
+    scrollbar-width:none;
+    resize: none;
+    padding: 5px;
+}
+#stranger-profiledesc {
+
+}
+#profile-age {
+    border: none;
+    font-size: 22px;
+}
+
+#profile, #stranger-profile {
+    border: 1px black solid;
+    padding: 0px 10px 10px 10px;
+    margin-top: 5px;
+}
+
+#globalchat-title {
+    text-align: center;
+    width: 403px;
+    border: 2px dashed black;
+}
+
+#options-menu {
+    border: 2px solid black;
+    width: 796px;
+    height: 50px;
+
+    #options-list {
+        display: flex;
+        flex-direction: row;
+        list-style: none;
+        justify-content: space-evenly;
+        border: 1px dotted gray;
+        padding: 2px;
+
+        li {
+            border-left: 1px solid gray;
+            border-right: 1px solid gray;
+            padding: 0px 5px 0px 5px;
+        
+        }:hover {
+            background-color: rgba(128, 128, 128, 0.411);
+            cursor: pointer;
+        }
+    }  
+
+}
+
+
+.edit-mode {
+    
+    h1, #edit-profiledesc {
+        color: gray;
+    
+    }
+
+    textarea {
+        border: 2.5px dashed black;
+    }
+}
+
+#chat-user {
+    z-index: 4;
+    padding-left: 4.65em;
+    text-indent:-4.65em;
+    cursor: pointer;
+}
+
+#friendlist-section {
+    position: absolute;
+    left: 500px;
+    top: 75px;
+    opacity: 0;
+    border: 2px black solid;
+    width: 307px;
+    height: 620px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    z-index: -1;
+    #friend-list {
+        margin-top: 0px;
+
+
+        li{
+            margin-left: -40px;
+            list-style: none;
+            padding: 15px;
+            border-bottom: 1px black solid;
+            text-indent: 5px;
+            font-size: 14px;
+            background-color: rgba(128, 128, 128, 0.219);
+        }:hover {
+            background-color: rgba(128, 128, 128, 0.658);
+        }
+    }
+
+    #friendlist-info {
+        font-size: 16px;
+        padding-bottom: 10px;
+        border-bottom: 3px dashed black;
+        text-align: center;
+    }
+}

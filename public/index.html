@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <link rel='stylesheet' href='styles.css'>
+    <script src="jquery-3.7.1.js"></script>
+    <script src="jqcookies/jquery.cookie.js"></script>
+    <script src='client.js'></script>
+    <script src='main.js'></script>
+    <title> Web Chat </title>
+</head>
+<header>
+    <nav id="options-menu">
+        <ul id="options-list">
+            <li id="showprofiles-option"> Show Profiles </li>
+            <li id="showfriends-option"> Show FriendList </li>
+            <li id=""> PLACEHOLDER </li>
+            <li id=""> PLACEHOLDER </li>
+        </ul>
+    </nav>
+</header>
+<body>
+    <div id="loginScreen">
+        <h1> Login with your user</h1>
+        <input type="text" id="username" placeholder="Enter your username">
+        <input type="password" id="password" placeholder="Enter your password">
+        <input type="button" id="login" value="Login">
+    </div>
+
+
+    <div id="register">
+        <h1> Or create your user </h1>
+        <input type="text" id="newusername" placeholder="Maximum 12 characters">
+        <input type="password" id="newpassword" placeholder="Maximum 26 characters">
+        <input type="button" id="setUser" value="Create user">
+    </div>
+
+
+    <h1 id="globalchat-title"> Global Chat <br> Talk with everybody online </h1>
+    <div id="globalChat"></div>
+    <textarea id="text"></textarea>
+    <input type="button" id="send" value="< Send">
+
+    <div id="profiles-section">
+        <div id="profile">
+            <h1 id="profile-name">Your name</h1>
+            <textarea readonly maxlength="3" cols="3" rows="1" id="profile-age">00</textarea>
+            <hr>
+            <textarea maxlength="256" cols="32" rows="10" id="profile-description" readonly
+                placeholder="Maximum 256 characters"></textarea>
+            <hr>
+            <input type="button" id="edit-profiledesc" value="Edit description">
+            <input type="button" id="save-profile" value="Save changes">
+        </div>
+        <div id="stranger-profile">
+            <h1 id="stranger-profilename">stranger name</h1>
+            <h2 id="stranger-profileage">stranger age</h2>
+            <hr>
+            <textarea cols="32" rows="10" id="stranger-profiledesc" readonly>
+Click on the name of an user in the chat to display the profile of that user.
+            </textarea>
+            <hr>
+            <input type="button" id="add-friend" value="Send friend request">
+            <input type="button" id="message-stranger" value="Send private message">
+        </div>
+    </div>
+
+    <div id="friendlist-section">
+        <h2 id="friendlist-info">Here you can see all your friends, if they are online, and message them! </h2>
+        <ul id="friend-list">
+            <li id=""> A FRIEND HERE</li>
+            <li id=""> ANOTHER FRIEND HERE</li>
+            <li id=""> [Someone] - Status: <b> Offline </b> </li>
+            <li id=""> ANOTHER FRIEND HERE</li>
+            <li id=""> ANOTHER FRIEND HERE</li>
+            <li id=""> ANOTHER FRIEND HERE</li>
+            <li id=""> ANOTHER FRIEND HERE</li>
+            <li id=""> ANOTHER FRIEND HERE</li>
+            <li id=""> ANOTHER FRIEND HERE</li>
+            <li id=""> ANOTHER FRIEND HERE</li>
+            <li id=""> ANOTHER FRIEND HERE</li>
+            <li id=""> ANOTHER FRIEND HERE</li>
+            <li id=""> ANOTHER FRIEND HERE</li>
+            <li id=""> ANOTHER FRIEND HERE</li>
+
+        </ul>
+
+    </div>
+
+</body>
+
+</html>

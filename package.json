@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "express": "^4.21.1",
+    "jquery": "^3.7.1",
+    "jsdom": "^25.0.1",
+    "mysql2": "^3.11.3",
+    "mysql2-promise": "^0.1.4",
+    "node": "^20.18.1",
+    "promise": "^8.3.0",
+    "s": "^1.0.0",
+    "websocket": "^1.0.35",
+    "ws": "^8.18.0"
+  },
+  "name": "chapp",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
