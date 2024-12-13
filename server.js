@@ -32,12 +32,22 @@ webSocketServer.on("request", function (req) {
 
         if (!connectionsList.includes(connection)) {
             connectionsList.push(connection);
+        
+    
         }
+    //    // store the name of the user AFTER the connection data, so when a friend request is sent, the index of the name is searched
+     //   // in the array, and when found, it gets the object behind it (i.e: username index = 1, this user's connection data index = 0)
+     //   // then just send a message to that connection which should be the person the user wants to send the friend request
+     //   // then wen closing te connection remove also the username
+     //WELL fuck that, will fuck around and find out how to use Redis
+
         connection.on("message", function (msg) {
             connectionsList.forEach((conn) => {
                 if (conn.connected) {
                     conn.sendUTF(`${msg.utf8Data}`);
+                   
                 }
+                
             });
         });
 
@@ -126,9 +136,16 @@ async function dataBaseConnection(action, name, password, age, description, frie
 
                 return { strangerAge: strangerAge, strangerDesc: strangerDesc, strangerName: strangerName }
         
-            case 'sendFriendRequest':
+            case 'sendFriendRequest':        
+                const newFriendReq = "INSERT INTO notifications SET user = ?, type = ?, content = ?"         
+                await con.query(newFriendReq, [friend, 'friendreq', `Friend request from: <b> ${name} </b>`])
+                        
 
-                return { idk: idk}
+                return { message: `A friend request has been sent to ${friend}`}
+
+            case 'loadAllNotifications':
+
+                break
         }
     } catch (err) {
         console.error('Database operation error:', err);

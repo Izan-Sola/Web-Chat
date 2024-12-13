@@ -7,8 +7,8 @@ $(document).ready(function () {
         $('#loginScreen').css('visibility', 'visible')
     }
     else {
-        //  $('#profile-name').html($('#'))
         connectToDataBase('loadProfile', $.cookie('sessionkey'), '', '', '', '')
+        //
     }
     $('input').on('mouseup', function (evt) {
         evt.preventDefault()
@@ -29,9 +29,7 @@ $(document).ready(function () {
                         alert('Name or password cant be empty!')
                         break
                     }
-
                     connectToDataBase('newUser', user, password)
-
                 }
                 else {
                     $('#register').css('visibility', 'hidden')
@@ -65,8 +63,10 @@ $(document).ready(function () {
                 connectToDataBase('updateProfile', $.cookie('sessionkey'), '', age, description)
                 break
 
-            case 'add-friend':
-                userToRequest = $('#stranger-profilename')
+            case 'send-friendreq':
+                userToRequest = $('#stranger-profilename').text()
+
+                
 
                 connectToDataBase('sendFriendRequest', username, '', '', '', userToRequest)
                 break
@@ -113,7 +113,42 @@ $(document).ready(function () {
                     'z-index': 1
                  })
             break
-        }
+
+            case 'friendreq-tab':
+                $('#notifications-messages').css('visibility', 'hidden')
+                $('#notifications-global').css('visibility', 'hidden')
+                $('#notifications-friendreq').css('visibility', 'visible')
+
+                $('#notif-option1').val('Accept Request');
+                $('#notif-option2').val('Decline Request');
+                break
+            case 'messages-tab':
+                $('#notifications-messages').css('visibility', 'visible')
+                $('#notifications-global').css('visibility', 'hidden')
+                $('#notifications-friendreq').css('visibility', 'hidden')
+                
+                $('#notif-option1').val('Delete Message');
+                $('#notif-option2').val('Open Message');
+                break
+            case 'global-tab':
+                $('#notifications-messages').css('visibility', 'hidden')
+                $('#notifications-global').css('visibility', 'visible')
+                $('#notifications-friendreq').css('visibility', 'hidden')
+
+                $('#notif-option1').val('Delete Message');
+                $('#notif-option2').val('Forward to Global (future feature not doing this soon)');
+                break             
+    }
+
+    parent = $(this).parent()
+
+    if (parent[0].id == 'notifications-friendreq' || 
+        parent[0].id == 'notifications-messages'  || 
+        parent[0].id == 'notifications-global' ) {
+
+        $('#'+parent[0].id).children().removeClass('selected')
+        $(this).addClass('selected');    
+     }
     })
 });
 
@@ -130,7 +165,8 @@ function connectToDataBase(action, name, password, age, description, friend) {
             name: name,
             password: password,
             age: age,
-            description: description
+            description: description,
+            friend: friend
         })
     })
         .then(response => response.json())
@@ -147,7 +183,6 @@ function connectToDataBase(action, name, password, age, description, friend) {
                     $.cookie('sessionkey', data.sessionKey)
                     alert(`User: "${name}" created successfully!`)
                     location.reload()
-
 
                 case 'checkLoginCredentials':
 
@@ -172,6 +207,8 @@ function connectToDataBase(action, name, password, age, description, friend) {
                     $('#profile-age').val(data.userAge[0][0].age);
                     $('#profile-description').val(data.userDesc[0][0].description);
                     username = data.userName[0][0].username
+
+                    //connectToDataBase('loadAllNotifications', username, '', '', '', '')
                     break
 
                 case 'loadStrangerProfile':
@@ -182,6 +219,7 @@ function connectToDataBase(action, name, password, age, description, friend) {
 
                 case 'sendFriendRequest':
                     //something something something
+                    alert(data.message)
                     break
             }
         })

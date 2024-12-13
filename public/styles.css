@@ -163,10 +163,10 @@ body {
             border-bottom: 1px black solid;
             text-indent: 5px;
             font-size: 14px;
-            background-color: rgba(128, 128, 128, 0.219);
+            background-color: rgba(128, 128, 128, 0.308);
 
         }:hover {
-            background-color: rgba(128, 128, 128, 0.658);
+            background-color: rgba(128, 128, 128, 0.555);
         }
     }
 
@@ -201,16 +201,50 @@ body {
         justify-content: space-evenly;
         border-bottom: 3px solid black;
         padding-bottom: 10px;
+        z-index: 4;
         
         li {
             border-left: 1px gray solid;
             border-right: 1px gray solid;
             padding-left: 5px;
             padding-right: 5px;
-
         }:hover {
-            background-color: rgba(128, 128, 128, 0.411);
+            background-color: rgba(128, 128, 128, 0.356);
             cursor: pointer;
         }
     }
+
+    
+    #notifications-friendreq, 
+    #notifications-messages, 
+    #notifications-global {
+               width: 89%;
+                list-style: none;
+                position: absolute;
+                li{
+                    margin-left: -40px;
+                    background-color: rgba(128, 128, 128, 0.24);     
+                    padding: 10px;
+                    margin-bottom: 10px;
+                }:hover {
+                    background-color: rgba(128, 128, 128, 0.438);
+                    cursor: pointer;
+                }
+    }
+
+}
+
+#notif-option1, #notif-option2 {
+    position: relative;
+    top: 665px;
+    left: 25px;
+}
+
+#notifications-messages, 
+    #notifications-global {
+        visibility: hidden;
+    }
+
+.selected {
+    background-color: rgba(0, 0, 0, 0.336) !important
 }

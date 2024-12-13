@@ -17,7 +17,7 @@
             <ul id="options-list">
                 <li id="showprofiles-option"> Show Profiles </li>
                 <li id="showfriends-option"> Show FriendList </li>
-                <li id=""> Switch Chat </li>
+                <li id=""> Switch Chat (DMs/GLOBAL) </li>
                 <li id=""> PLACEHOLDER </li>
             </ul>
         </nav>
@@ -51,15 +51,26 @@
             <ul>
                 <li id="friendreq-tab"> Friend Requests </li>
                 <li id="messages-tab"> New Messages </li>
-                <li id=""> GLOBAL </li>
+                <li id="global-tab"> GLOBAL </li>
             </ul>
         </nav>
-        <!-- <ul id="notifications-friendreq">
-                <li></li>
-            </ul> 
-            
-            -->
+        <ul id="notifications-friendreq">
+            <li> Friend request from: <b> SOMEONE </b> | (X Time ago)</li>
+            <li> Friend request from: <b> SOMEONE </b> | (X Time ago)</li>
+            <li> Friend request from: <b> SOMEONE </b> | (X Time ago)</li>
+        </ul>
+        <ul id="notifications-messages">
+            <li>NEW DM FROM SOMEONE BLABLA</li>
+        </ul>
+        <ul id="notifications-global">
+            <li>ANNOUNCEMENT OR SOMETHING IDK!</li>
+        </ul>
 
+    </div>
+
+    <div id="notif-options">
+        <input type="button" id="notif-option1" value="Accept Request">
+        <input type="button" id="notif-option2" value="Decline Request">
     </div>
 
     <div id="profiles-section">
@@ -82,7 +93,7 @@
 Click on the name of an user in the chat to display the profile of that user.
             </textarea>
             <hr>
-            <input type="button" id="add-friend" value="Send friend request">
+            <input type="button" id="send-friendreq" value="Send friend request">
             <input type="button" id="message-stranger" value="Send private message">
         </div>
     </div>
@@ -90,11 +101,11 @@ Click on the name of an user in the chat to display the profile of that user.
     <div id="friendlist-section">
         <h2 id="friendlist-info">Here you can see all your friends, if they are online, and message them! </h2>
         <ul id="friend-list">
-            <li id=""> A FRIEND HERE</li>
-            <li id=""> ANOTHER FRIEND HERE</li>
-            <li id=""> [Someone] - Status: <b> Offline </b> </li>
-            <li id=""> ANOTHER FRIEND HERE</li>
-            <li id=""> ANOTHER FRIEND HERE</li>
+            <li id=""> A FRIEND HERE </li>
+            <li id=""> ANOTHER FRIEND HERE </li>
+            <li id=""> [Example] - Status: <b> Offline </b> </li>
+            <li id=""> ANOTHER FRIEND HERE </li>
+            <li id=""> Work In Progress </li>
         </ul>
 
     </div>
