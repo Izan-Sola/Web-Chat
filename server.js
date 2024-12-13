@@ -35,12 +35,7 @@ webSocketServer.on("request", function (req) {
         
     
         }
-    //    // store the name of the user AFTER the connection data, so when a friend request is sent, the index of the name is searched
-     //   // in the array, and when found, it gets the object behind it (i.e: username index = 1, this user's connection data index = 0)
-     //   // then just send a message to that connection which should be the person the user wants to send the friend request
-     //   // then wen closing te connection remove also the username
-     //WELL fuck that, will fuck around and find out how to use Redis
-
+//redis for notifs
         connection.on("message", function (msg) {
             connectionsList.forEach((conn) => {
                 if (conn.connected) {
