@@ -26,7 +26,7 @@ const webSocketServer = new WebSocketServer({
 });
 
 const connectionsListM = new Map();
-//replace the array with a map: (sessionkey, connection)
+
 webSocketServer.on("request", function (req) {
     if (req.origin === 'https://monthly-devoted-pug.ngrok-free.app') {
         const connection = req.accept(null, req.origin);
@@ -143,11 +143,12 @@ async function dataBaseConnection(action, name, password, age, description, frie
                 const newFriendReq = "INSERT INTO friendrequests SET receiver = ?, sender = ?, content = ?"         
                 const receiverkey = await con.query('SELECT sessionkey FROM users WHERE username = ?', [friend])
                 
+                
                 await con.query(newFriendReq, [friend, name, `Friend request from: <b> ${name} </b>`])
                         
-                message = `A friend request has been sent to ${friend}`
-                loadNotifications('newFriendReq', friend, message, receiverkey)
-                return { message: message }
+
+                sendNotification('newFriendReq', `<li> Friend request from: <b> ${name} </b> </li>`, receiverkey, )
+                return { message: 'Friend request successfully sent' }
 
             case 'loadAllNotifications':
 
@@ -160,11 +161,11 @@ async function dataBaseConnection(action, name, password, age, description, frie
         await con.end();
     }
 }
-//actions: all, newFriendReq, newAnnouncement, newDM
-function loadNotifications(type, receiver, notif, receiverkey) {
+//newFriendReq, newAnnouncement, newDM
+function sendNotification(type, notif, receiverkey, ) {
     switch (type) {
         case 'newFriendReq':
-            const notifdata = JSON.stringify({ type: type, receiver: receiver, notif: notif, receiverkey: receiverkey[0][0].sessionkey })
+            const notifdata = JSON.stringify({ type: type, notif: notif })
             
             s = connectionsListM.get(receiverkey[0][0].sessionkey)
             s.sendUTF(notifdata)
