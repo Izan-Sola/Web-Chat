@@ -50,18 +50,8 @@ function onMessage(msgc){
 
                 case 'newFriendReq':
                     alert('TEST: FRIEND REQUEST RECEIVED!!')
-                    
+                    $('#notifications-friendreq').append(`${msgdata.notif}`)
                 break
             }
-
-
-            // if(msgc.data == 'retrievekey') {
-            //     doSend($.cookie('sessionkey'), 'sentkey') 
-            // }
-            
-            // else {
-            //     console.log(msgc)
-            //     $('#globalChat').append(`<p id="chat-user"> ${msgc.data} </p>`)
-            // }
 }
 
