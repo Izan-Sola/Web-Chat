@@ -17,42 +17,47 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.static('public'));
 const crypto = require('crypto');
+const { connection } = require('websocket');
 
 
 const webSocketServer = new WebSocketServer({
     httpServer: server,
-    autoAcceptConnections: false // Enable origin validation
+    autoAcceptConnections: false 
 });
-const connectionsList = []; // List of active connections
 
+const connectionsListM = new Map();
+//replace the array with a map: (sessionkey, connection)
 webSocketServer.on("request", function (req) {
     if (req.origin === 'https://monthly-devoted-pug.ngrok-free.app') {
         const connection = req.accept(null, req.origin);
         console.log('Connection accepted from:', req.origin);
 
-        if (!connectionsList.includes(connection)) {
-            connectionsList.push(connection);
-        
-    
-        }
-//redis for notifs
+        const request = JSON.stringify({type: 'retrievekey'})
+        connection.sendUTF(request)
+   
+
         connection.on("message", function (msg) {
-            connectionsList.forEach((conn) => {
-                if (conn.connected) {
-                    conn.sendUTF(`${msg.utf8Data}`);
-                   
-                }
-                
-            });
+            const message = JSON.parse(msg.utf8Data)
+          
+            switch (message.type) {
+                case 'globalmsg':         
+                        for (let [user, conn] of connectionsListM) 
+                            if(conn.connected) {
+                                  messagedata = JSON.stringify({type: 'globalmsg', message: message.msg})
+                                  conn.sendUTF(messagedata);  
+                        }
+                break
+
+                case 'sentkey':
+                        connectionsListM.set(message.msg, connection)
+                break
+            }
         });
 
         connection.on("close", function () {
             console.log('Connection closed');
 
-            const index = connectionsList.indexOf(connection);
-            if (index !== -1) {
-                connectionsList.splice(index, 1);
-            }
+            connectionsListM.delete(connection)
         });
     } else {
         req.reject();
@@ -122,6 +127,9 @@ async function dataBaseConnection(action, name, password, age, description, frie
                 const userDesc =  await con.query('SELECT description FROM users WHERE sessionkey = ?', [name])
                 const userAge =  await con.query('SELECT age FROM users WHERE sessionkey = ?', [name])
                 const userName =  await con.query('SELECT username FROM users WHERE sessionkey = ?', [name])
+
+        
+
                 return { userAge: userAge, userDesc: userDesc, userName: userName }
 
             case 'loadStrangerProfile':
@@ -132,11 +140,14 @@ async function dataBaseConnection(action, name, password, age, description, frie
                 return { strangerAge: strangerAge, strangerDesc: strangerDesc, strangerName: strangerName }
         
             case 'sendFriendRequest':        
-                const newFriendReq = "INSERT INTO notifications SET user = ?, type = ?, content = ?"         
-                await con.query(newFriendReq, [friend, 'friendreq', `Friend request from: <b> ${name} </b>`])
+                const newFriendReq = "INSERT INTO friendrequests SET receiver = ?, sender = ?, content = ?"         
+                const receiverkey = await con.query('SELECT sessionkey FROM users WHERE username = ?', [friend])
+                
+                await con.query(newFriendReq, [friend, name, `Friend request from: <b> ${name} </b>`])
                         
-
-                return { message: `A friend request has been sent to ${friend}`}
+                message = `A friend request has been sent to ${friend}`
+                loadNotifications('newFriendReq', friend, message, receiverkey)
+                return { message: message }
 
             case 'loadAllNotifications':
 
@@ -147,6 +158,19 @@ async function dataBaseConnection(action, name, password, age, description, frie
         return { error: 'ERROR' };
     } finally {
         await con.end();
+    }
+}
+//actions: all, newFriendReq, newAnnouncement, newDM
+function loadNotifications(type, receiver, notif, receiverkey) {
+    switch (type) {
+        case 'newFriendReq':
+            const notifdata = JSON.stringify({ type: type, receiver: receiver, notif: notif, receiverkey: receiverkey[0][0].sessionkey })
+            
+            s = connectionsListM.get(receiverkey[0][0].sessionkey)
+            s.sendUTF(notifdata)
+            
+           // conn.sendUTF(notifdata)
+        break
     }
 }
 

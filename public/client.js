@@ -1,3 +1,5 @@
+
+
 function openConnection() {
     wsocket = new WebSocket('wss://monthly-devoted-pug.ngrok-free.app')
     wsocket.onopen = function (event) {
@@ -23,9 +25,9 @@ function onError(error) {
     console.log('Error: ' + error.data)
 }
 
-function doSend(msg) {
-    console.log('Sent message: ' + msg)
-    wsocket.send(msg)
+function doSend(msg, type) {
+    const message = JSON.stringify({ msg: msg, type: type });
+    wsocket.send(message);
 }
 
 window.addEventListener('load', function () {
@@ -33,7 +35,33 @@ window.addEventListener('load', function () {
 })
 
 
-function onMessage(msgc, type){
-    $('#globalChat').append(`<p id="chat-user"> ${msgc.data} </p>`)
+function onMessage(msgc){
+
+           msgdata = JSON.parse(msgc.data)
+        
+            switch (msgdata.type) {
+                case 'retrievekey':
+                    doSend($.cookie('sessionkey'), 'sentkey') 
+                break
+
+                case 'globalmsg':
+                    $('#globalChat').append(`<p id="chat-user"> ${msgdata.message} </p>`)
+                break
+
+                case 'newFriendReq':
+                    alert('TEST: FRIEND REQUEST RECEIVED!!')
+                    
+                break
+            }
+
+
+            // if(msgc.data == 'retrievekey') {
+            //     doSend($.cookie('sessionkey'), 'sentkey') 
+            // }
+            
+            // else {
+            //     console.log(msgc)
+            //     $('#globalChat').append(`<p id="chat-user"> ${msgc.data} </p>`)
+            // }
 }
 

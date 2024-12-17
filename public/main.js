@@ -16,7 +16,7 @@ $(document).ready(function () {
         switch (this.id) {
             case 'send':
                 text = $('#text').val()
-                doSend('&nbsp;' + ` [${username}] ` + ' --> ' + text)
+                doSend('&nbsp;' + ` [${username}] ` + ' --> ' + text, 'globalmsg')
                 $('#text').val('')
 
                 break
