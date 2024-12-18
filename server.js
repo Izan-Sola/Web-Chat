@@ -144,14 +144,27 @@ async function dataBaseConnection(action, name, password, age, description, frie
                 const receiverkey = await con.query('SELECT sessionkey FROM users WHERE username = ?', [friend])
                 
                 
-                await con.query(newFriendReq, [friend, name, `Friend request from: <b> ${name} </b>`])
+                await con.query(newFriendReq, [friend, name,  `<li> Friend request from: <b class="friendreq-sender"> ${name} </b> </li>`])
                         
 
-                sendNotification('newFriendReq', `<li> Friend request from: <b> ${name} </b> </li>`, receiverkey, )
+                sendNotification('newFriendReq', `<li> Friend request from: <b class="friendreq-sender"> ${name} </b> </li>`, receiverkey, )
                 return { message: 'Friend request successfully sent' }
 
             case 'loadAllNotifications':
+                //!sfs
+                //*Atm just load friend req
+                const [getFriendReqs] =  await con.query('SELECT * FROM friendrequests WHERE receiver = ?', [name])
 
+               
+                return { friendReqNotifications: getFriendReqs }
+
+            case 'loadFriendList':
+
+                break
+
+            case 'addFriend':
+                const addFriend = await con.query('INSERT INTO friends SET user1 = ?, user2 = ?',  [name, friend])
+            
                 break
         }
     } catch (err) {
@@ -162,11 +175,13 @@ async function dataBaseConnection(action, name, password, age, description, frie
     }
 }
 //newFriendReq, newAnnouncement, newDM
-function sendNotification(type, notif, receiverkey, ) {
+function sendNotification(type, notif, receiverkey) {
+
+   
+
     switch (type) {
         case 'newFriendReq':
             const notifdata = JSON.stringify({ type: type, notif: notif })
-            
             s = connectionsListM.get(receiverkey[0][0].sessionkey)
             s.sendUTF(notifdata)
             

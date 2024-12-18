@@ -13,6 +13,7 @@ $(document).ready(function () {
     $('input').on('mouseup', function (evt) {
         evt.preventDefault()
 
+
         switch (this.id) {
             case 'send':
                 text = $('#text').val()
@@ -64,12 +65,27 @@ $(document).ready(function () {
                 break
 
             case 'send-friendreq':
-                userToRequest = $('#stranger-profilename').text()
-
-                
+                userToRequest = $('#stranger-profilename').text()            
 
                 connectToDataBase('sendFriendRequest', username, '', '', '', userToRequest)
                 break
+
+            case 'notif-option1':
+            case 'notif-option2':
+
+                option = $(this).val()
+                
+                if (option == 'Accept Request') {
+                    newFriend = $('.selected').children().text()
+                    alert(newFriend) 
+                    connectToDataBase('addFriend', username, '', '', '', newFriend, '')
+                }
+                else if (option == 'Decline Request') {
+                    $('.selected').remove()
+                    //connectToDataBase('removeNotifications')
+                }
+                break
+          
         }
     });
 
@@ -92,7 +108,6 @@ $(document).ready(function () {
                     opacity: '1',
                     transition: 'opacity 0.3s ease-in-out',
                     'z-index': 1
-
                  })
                  $('#friendlist-section').css({               
                     opacity: '0',
@@ -208,7 +223,7 @@ function connectToDataBase(action, name, password, age, description, friend) {
                     $('#profile-description').val(data.userDesc[0][0].description);
                     username = data.userName[0][0].username
 
-                    //connectToDataBase('loadAllNotifications', username, '', '', '', '')
+                    connectToDataBase('loadAllNotifications', username, '', '', '', '')
                     break
 
                 case 'loadStrangerProfile':
@@ -218,8 +233,32 @@ function connectToDataBase(action, name, password, age, description, friend) {
                     break
 
                 case 'sendFriendRequest':
-                    //something something something
+                    
                     alert(data.message)
+                    break
+
+                case 'addFriend':
+
+                    alert('New friend added successfully!')
+                    //after adding friend load friend list
+                    break
+                case 'loadFriendList':
+
+                    
+                    //something something something
+                    break
+
+                case 'loadAllNotifications':
+                    
+                    data.friendReqNotifications.forEach(reqnotif => {
+                        
+                        $('#notifications-friendreq').append(reqnotif.content)
+                    });
+                    break
+
+                case 'removeNotifications':
+
+                    //asjghdslkghskgldshgjsgls
                     break
             }
         })
