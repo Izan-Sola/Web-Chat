@@ -64,10 +64,16 @@ body {
     }
 }
 
+#profile-name, #stranger-profilename {
+    margin-top: 6px;
+}
+#profile-age, #stranger-profileage {
+    margin-top: -10px;
+}
 #profiles-section {
     position: absolute;
     left: 900px;
-    top: 75px;
+    top: 65px;
 }
 
 #profile-description, #stranger-profiledesc, #profile-age {

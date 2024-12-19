@@ -136,6 +136,10 @@ $(document).ready(function () {
                  })
             break
 
+            case 'switch-chat':
+                 
+            break
+
             case 'friendreq-tab':
                 $('#notifications-messages').css('visibility', 'hidden')
                 $('#notifications-global').css('visibility', 'hidden')
