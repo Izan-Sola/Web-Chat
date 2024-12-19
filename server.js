@@ -159,11 +159,24 @@ async function dataBaseConnection(action, name, password, age, description, frie
                 return { friendReqNotifications: getFriendReqs }
 
             case 'loadFriendList':
+                friends = []
+                const [rows] = await con.query('SELECT * FROM friends WHERE user1 = ? OR user2 = ?', [name, name])
+                
+                $.each(rows, function (index, friend) { 
+                    
+                    if (friend.user1 == name) {
+                        friends.push(friend.user2)
+                    }
+                    else if (friend.user2 == name) {
+                        friends.push(friend.user1)
+                    }
+                });
 
-                break
+                return { friendlist: friends }
 
             case 'addFriend':
-                const addFriend = await con.query('INSERT INTO friends SET user1 = ?, user2 = ?',  [name, friend])
+                const addFriend = await con.query('INSERT INTO friends SET user1 = ?, user2 = ?',  [name, friend.trim()])
+                await con.query('DELETE FROM friendrequests WHERE receiver = ?', [name])
             
                 break
         }
@@ -176,8 +189,6 @@ async function dataBaseConnection(action, name, password, age, description, frie
 }
 //newFriendReq, newAnnouncement, newDM
 function sendNotification(type, notif, receiverkey) {
-
-   
 
     switch (type) {
         case 'newFriendReq':
