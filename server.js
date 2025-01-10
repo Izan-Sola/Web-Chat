@@ -124,13 +124,9 @@ async function dataBaseConnection(action, name, password, age, description, frie
                  return { message: message }
 
             case 'loadProfile':
-                const userDesc =  await con.query('SELECT description FROM users WHERE sessionkey = ?', [name])
-                const userAge =  await con.query('SELECT age FROM users WHERE sessionkey = ?', [name])
-                const userName =  await con.query('SELECT username FROM users WHERE sessionkey = ?', [name])
+                const userData = await con.query('SELECT description, age, username FROM users WHERE sessionkey = ?', [name])
 
-        
-
-                return { userAge: userAge, userDesc: userDesc, userName: userName }
+                return { userData: userData }
 
             case 'loadStrangerProfile':
                 const strangerDesc =  await con.query('SELECT description FROM users WHERE username = ?', [name])
