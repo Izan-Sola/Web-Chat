@@ -229,13 +229,14 @@ function connectToDataBase(action, name, password, age, description, friend) {
                     break
 
                 case 'loadProfile':
-                    $('#profile-name').html(data.userName[0][0].username);
-                    $('#profile-age').val(data.userAge[0][0].age);
-                    $('#profile-description').val(data.userDesc[0][0].description);
-                    username = data.userName[0][0].username
+                    $('#profile-name').html(data.userData[0][0].username);
+                    $('#profile-age').val(data.userData[0][0].age);
+                    $('#profile-description').val(data.userData[0][0].description);
+                    username = data.userData[0][0].username
 
                     connectToDataBase('loadAllNotifications', username)
-                    connectToDataBase('loadFriendList', username)
+                    connectToDataBase('loadFriendList', username) 
+                    
                     break
 
                 case 'loadStrangerProfile':
