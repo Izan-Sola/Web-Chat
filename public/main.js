@@ -240,9 +240,9 @@ function connectToDataBase(action, name, password, age, description, friend) {
                     break
 
                 case 'loadStrangerProfile':
-                    $('#stranger-profileage').html(data.strangerAge[0][0].age);
-                    $('#stranger-profiledesc').val(data.strangerDesc[0][0].description);
-                    $('#stranger-profilename').html(data.strangerName[0][0].username);
+                    $('#stranger-profileage').html(data.strangerData[0][0].age);
+                    $('#stranger-profiledesc').val(data.strangerData[0][0].description);
+                    $('#stranger-profilename').html(data.strangerData[0][0].username);
                     break
 
                 case 'sendFriendRequest':
