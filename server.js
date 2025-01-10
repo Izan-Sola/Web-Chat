@@ -129,11 +129,9 @@ async function dataBaseConnection(action, name, password, age, description, frie
                 return { userData: userData }
 
             case 'loadStrangerProfile':
-                const strangerDesc =  await con.query('SELECT description FROM users WHERE username = ?', [name])
-                const strangerAge =  await con.query('SELECT age FROM users WHERE username = ?', [name])
-                const strangerName =  await con.query('SELECT username FROM users WHERE username = ?', [name])
+                const strangerData = await con.query('SELECT description, age, username FROM users WHERE username = ?', [name])
 
-                return { strangerAge: strangerAge, strangerDesc: strangerDesc, strangerName: strangerName }
+                return { strangerData: strangerData }
         
             case 'sendFriendRequest':        
                 const newFriendReq = "INSERT INTO friendrequests SET receiver = ?, sender = ?, content = ?"         
