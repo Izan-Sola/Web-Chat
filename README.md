@@ -1,2 +1,2 @@
 # Web-Chat
-Making a web chat cuz guess what IM BORED!!!
+Yet another unfinished project that might or might not be finished who knows
