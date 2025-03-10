@@ -26,15 +26,16 @@ const webSocketServer = new WebSocketServer({
 });
 
 const connectionsListM = new Map();
+globalMSGsList = []
+
 
 webSocketServer.on("request", function (req) {
     if (req.origin === 'https://monthly-devoted-pug.ngrok-free.app') {
         const connection = req.accept(null, req.origin);
-        console.log('Connection accepted from:', req.origin);
+       // console.log('Connection accepted from:', req.origin);
 
         const request = JSON.stringify({type: 'retrievekey'})
         connection.sendUTF(request)
-   
 
         connection.on("message", function (msg) {
             const message = JSON.parse(msg.utf8Data)
@@ -55,13 +56,13 @@ webSocketServer.on("request", function (req) {
         });
 
         connection.on("close", function () {
-            console.log('Connection closed');
+         // console.log('Connection closed');
 
             connectionsListM.delete(connection)
         });
     } else {
         req.reject();
-        console.log('Connection rejected from:', req.origin);
+        //console.log('Connection rejected from:', req.origin);
     }
 });
 
@@ -129,10 +130,11 @@ async function dataBaseConnection(action, name, password, age, description, frie
                 return { userData: userData }
 
             case 'loadStrangerProfile':
+    
                 const strangerData = await con.query('SELECT description, age, username FROM users WHERE username = ?', [name])
 
                 return { strangerData: strangerData }
-        
+
             case 'sendFriendRequest':        
                 const newFriendReq = "INSERT INTO friendrequests SET receiver = ?, sender = ?, content = ?"         
                 const receiverkey = await con.query('SELECT sessionkey FROM users WHERE username = ?', [friend])

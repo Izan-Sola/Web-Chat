@@ -127,7 +127,9 @@ body {
 
 }
 
-
+#edit-profiledesc {
+    z-index: 99;
+}
 .edit-mode {
     
     h1, #edit-profiledesc {
@@ -148,6 +150,7 @@ body {
 }
 
 #friendlist-section {
+    display: none;
     position: absolute;
     left: 900px;
     top: 75px;
@@ -155,9 +158,13 @@ body {
     border: 2px black solid;
     width: 307px;
     height: 620px;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    z-index: -1;
+
+    #friends-container {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        z-index: -15;
+    }
+
     #friend-list {
         margin-top: 0px;
 
@@ -251,6 +258,10 @@ body {
         visibility: hidden;
     }
 
+#friend-options {
+    position: relative;
+    top: 350px;
+}
 .selected {
-    background-color: rgba(0, 0, 0, 0.336) !important
+    background-color: rgba(0, 0, 0, 0.340) !important
 }

@@ -95,14 +95,12 @@ $(document).ready(function () {
         if (stranger[1] != username) {
             connectToDataBase('loadStrangerProfile', stranger[1], '', '', '')
         }
-        
-        $.each($('#friend-list').children().children(), function (index, element) { 
-             
-                if(stranger[1] == $(element).text()) {
-                    $('#send-friendreq').attr('disabled', true);
-                }
-        });
-        
+
+        if (friends.includes(stranger[1])) {
+            $('#send-friendreq').attr('disabled', true);
+        } else {
+            $('#send-friendreq').attr('disabled', false);
+        }
     })
 
     $(document).on('mouseup', 'li', function (evt) {
@@ -113,11 +111,13 @@ $(document).ready(function () {
             case 'showprofiles-option':
                  $('#profiles-section').css({
                     opacity: '1',
+                    display: 'block',
                     transition: 'opacity 0.3s ease-in-out',
                     'z-index': 1
                  })
                  $('#friendlist-section').css({               
                     opacity: '0',
+                    display: 'none',
                     transition: 'opacity 0.3s ease-in-out',
                     'z-index': -1
                  })
@@ -126,11 +126,13 @@ $(document).ready(function () {
             case 'showfriends-option':
                 $('#profiles-section').css({               
                     opacity: '0',
+                    display: 'none',
                     transition: 'opacity 0.3s ease-in-out',
                     'z-index': -1
                  })
                  $('#friendlist-section').css({               
                     opacity: '1',
+                    display: 'block',
                     transition: 'opacity 0.3s ease-in-out',
                     'z-index': 1
                  })
@@ -235,7 +237,7 @@ function connectToDataBase(action, name, password, age, description, friend) {
                     username = data.userData[0][0].username
 
                     connectToDataBase('loadAllNotifications', username)
-                    connectToDataBase('loadFriendList', username) 
+                    connectToDataBase('loadFriendList', username)
                     
                     break
 
@@ -258,10 +260,13 @@ function connectToDataBase(action, name, password, age, description, friend) {
                     break
 
                 case 'loadFriendList':
+                    $('#friend-list').html('')
                     $.each(data.friendlist, function (index, element) { 
-                        $('#friend-list').append(`<li> <b class="friend-name"> ${element} </b> - Status: Offline </li>`)                 
+                       
+                        $('#friend-list').append(`<li> <b class="friend-name"> ${element} </b> - Status: Offline </li>`)    
+                        console.log(element)             
                     });
-
+                    friends = data.friendlist;
                     break
 
                 case 'loadAllNotifications':
