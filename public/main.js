@@ -2,12 +2,14 @@
 
 $(document).ready(function () {
 
+   
+
     if ($.cookie('sessionkey') == undefined) {
         $('#register').css('visibility', 'visible')
         $('#loginScreen').css('visibility', 'visible')
     }
     else {
-        connectToDataBase('loadProfile', $.cookie('sessionkey'), '', '', '', '')
+        connectToServer('loadProfile', $.cookie('sessionkey'), '', '', '', '')
         //
     }
     $('input').on('mouseup', function (evt) {
@@ -30,7 +32,7 @@ $(document).ready(function () {
                         alert('Name or password cant be empty!')
                         break
                     }
-                    connectToDataBase('newUser', user, password)
+                    connectToServer('newUser', user, password)
                 }
                 else {
                     $('#register').css('visibility', 'hidden')
@@ -46,7 +48,7 @@ $(document).ready(function () {
                     alert('Name or password cant be empty!')
                     break
                 }
-                connectToDataBase('checkLoginCredentials', user, password)
+                connectToServer('checkLoginCredentials', user, password)
                 break
 
             case 'edit-profiledesc':
@@ -61,13 +63,13 @@ $(document).ready(function () {
                 $('#profile-description').attr('readonly', 'true');
                 $('#profile-age').attr('readonly', 'true');
                 $('#profile').removeClass('edit-mode');
-                connectToDataBase('updateProfile', $.cookie('sessionkey'), '', age, description)
+                connectToServer('updateProfile', $.cookie('sessionkey'), '', age, description)
                 break
 
             case 'send-friendreq':
                 userToRequest = $('#stranger-profilename').text()            
 
-                connectToDataBase('sendFriendRequest', username, '', '', '', userToRequest)
+                connectToServer('sendFriendRequest', username, '', '', '', userToRequest)
                 break
 
             case 'notif-option1':
@@ -78,7 +80,7 @@ $(document).ready(function () {
                 if (option == 'Accept Request') {
                     newFriend = $('.selected').children().text()
                     alert(newFriend) 
-                    connectToDataBase('addFriend', username, '', '', '', newFriend, '')
+                    connectToServer('addFriend', username, '', '', '', newFriend, '')
                 }
                 else if (option == 'Decline Request') {
                     $('.selected').remove()
@@ -93,7 +95,7 @@ $(document).ready(function () {
         evt.stopPropagation()
         stranger = $(this).text().match(/\[([^\]]+)\]/)
         if (stranger[1] != username) {
-            connectToDataBase('loadStrangerProfile', stranger[1], '', '', '')
+            connectToServer('loadStrangerProfile', stranger[1], '', '', '')
         }
 
         if (friends.includes(stranger[1])) {
@@ -181,7 +183,7 @@ $(document).ready(function () {
 });
 
 
-function connectToDataBase(action, name, password, age, description, friend) {
+function connectToServer(action, name, password, age, description, friend) {
     fetch('https://monthly-devoted-pug.ngrok-free.app/databaseupdates', {
         method: 'POST',
         headers: {
@@ -219,7 +221,7 @@ function connectToDataBase(action, name, password, age, description, friend) {
                         $('#loginScreen').css('visibility', 'hidden')
                         $.cookie('sessionkey', data.sessionKey[0][0].sessionkey)
                         $('#profile-name').html(name)
-                        connectToDataBase('loadProfile', $.cookie('sessionkey'), '', '', '', '')
+                        connectToServer('loadProfile', $.cookie('sessionkey'), '', '', '', '')
                     }
                     alert(data.message)
                     break
@@ -236,9 +238,16 @@ function connectToDataBase(action, name, password, age, description, friend) {
                     $('#profile-description').val(data.userData[0][0].description);
                     username = data.userData[0][0].username
 
-                    connectToDataBase('loadAllNotifications', username)
-                    connectToDataBase('loadFriendList', username)
+                    connectToServer('loadAllNotifications', username)
+                    connectToServer('loadFriendList', username)
+                  
+
+                    $.each(data.globalHistory, function (index, globalmsg) { 
+                        $('#globalChat').append( `<p id=chat-user> ${globalmsg} </p>`)
+                        console.log(data.globalHistory)
+                    });
                     
+    
                     break
 
                 case 'loadStrangerProfile':
@@ -255,7 +264,7 @@ function connectToDataBase(action, name, password, age, description, friend) {
                 case 'addFriend':
 
                     alert('New friend added successfully!')
-                    connectToDataBase('loadFriendList', username)
+                    connectToServer('loadFriendList', username)
 
                     break
 

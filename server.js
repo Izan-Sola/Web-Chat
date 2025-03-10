@@ -26,7 +26,7 @@ const webSocketServer = new WebSocketServer({
 });
 
 const connectionsListM = new Map();
-globalMSGsList = []
+const globalMSGsList = []
 
 
 webSocketServer.on("request", function (req) {
@@ -47,6 +47,7 @@ webSocketServer.on("request", function (req) {
                                   messagedata = JSON.stringify({type: 'globalmsg', message: message.msg})
                                   conn.sendUTF(messagedata);  
                         }
+                        globalMSGsList.push(message.msg)
                 break
 
                 case 'sentkey':
@@ -126,8 +127,8 @@ async function dataBaseConnection(action, name, password, age, description, frie
 
             case 'loadProfile':
                 const userData = await con.query('SELECT description, age, username FROM users WHERE sessionkey = ?', [name])
-
-                return { userData: userData }
+                
+                return { userData: userData, globalHistory: globalMSGsList}
 
             case 'loadStrangerProfile':
     
