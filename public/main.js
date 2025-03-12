@@ -20,7 +20,7 @@ $(document).ready(function () {
         switch (this.id) {
             case 'send-globalmsg':
                 text = $('#global-textarea').val()
-                doSend('&nbsp;' + ` [${username}] ` + ' --> ' + text, 'globalmsg')
+                doSend('&nbsp;' + ` [${username}] ` + ' --> ' + text, 'globalmsg', 'all')
                 $('#global-textarea').val('')
 
                 break
@@ -90,6 +90,23 @@ $(document).ready(function () {
 
                 }
                 break         
+
+            case 'friend-sendDM':
+
+                $('#profiles-section').css({display: 'none'})
+                $('#privatechat-section').css({display: 'block'})
+                $('#friendlist-section').css({display: 'none'})
+
+                selectedFriend = $('.selected .friend-name').text()
+
+                $('#privatechat-title').html(`Your private chat with ${selectedFriend}`);
+            break
+
+            case 'send-privatemsg':
+                text = $('#global-textarea').val()
+                doSend('&nbsp;' + ` [${username}] ` + ' --> ' + text, 'privatemsg', selectedFriend)
+                $('#global-textarea').val('')
+            break
         }
     });
 
@@ -98,6 +115,9 @@ $(document).ready(function () {
         evt.stopPropagation()
         stranger = $(this).text().match(/\[([^\]]+)\]/)
         if (stranger[1] != username) {
+            $('#profiles-section').css({display: 'block'})
+            $('#friendlist-section').css({display: 'none'})
+            $('#privatechat-section').css({display: 'none'})
             connectToServer('loadStrangerProfile', stranger[1], '', '', '')
         }
 
@@ -276,7 +296,7 @@ function connectToServer(action, name, password, age, description, friend) {
                 case 'removeNotifications':
 
                     //asjghdslkghskgldshgjsgls
-                    break
+                break
             }
         })
         .catch(error => {

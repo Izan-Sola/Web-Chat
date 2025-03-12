@@ -25,8 +25,8 @@ function onError(error) {
     console.log('Error: ' + error.data)
 }
 
-function doSend(msg, type) {
-    const message = JSON.stringify({ msg: msg, type: type });
+function doSend(msg, type, to) {
+    const message = JSON.stringify({ msg: msg, type: type, to: to });
     wsocket.send(message);
 }
 
@@ -51,6 +51,12 @@ function onMessage(msgc){
                 case 'newFriendReq':
                     alert('TEST: FRIEND REQUEST RECEIVED!!')
                     $('#notifications-friendreq').append(`${msgdata.notif}`)
+                break
+
+                case 'privatemsg':
+                    alert('testing dms')
+                    $('#privateChat').append(`${msgdata.message}`)
+
                 break
             }
 }

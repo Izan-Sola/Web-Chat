@@ -26,7 +26,7 @@ const webSocketServer = new WebSocketServer({
 });
 
 const connectionsListM = new Map();
-const globalMSGsList = []
+globalMSGsList = []
 
 
 webSocketServer.on("request", function (req) {
@@ -42,13 +42,25 @@ webSocketServer.on("request", function (req) {
           
             switch (message.type) {
                 case 'globalmsg':         
-                        for (let [user, conn] of connectionsListM) 
+
+                        for (let [user, conn] of connectionsListM) {
                             if(conn.connected) {
                                   messagedata = JSON.stringify({type: 'globalmsg', message: message.msg})
                                   conn.sendUTF(messagedata);  
                         }
-                        globalMSGsList.push(message.msg)
+                    }
+                case 'privatemsg':
+                    //TODO: Retrieve the sessionkey of the receiver by looking for
+                    //TODO: the name on the database and check if the user is connected before
+                    //TODO: sending the message.
+            
+                        if (connectionsListM.has)
                 break
+                if((globalMSGsList.length - 1) > 10) {
+                    globalMSGsList = []
+                }
+                globalMSGsList.push(message.msg)
+                break 
 
                 case 'sentkey':
                         connectionsListM.set(message.msg, connection)
