@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <link rel='stylesheet' href='styles.css'>
+    <script src="jquery-3.7.1.js"></script>
+    <script src="jqcookies/jquery.cookie.js"></script>
+    <script src='client.js'></script>
+    <script src='main.js'></script>
+    <title> Web Chat </title>
+</head>
+
+<body>
+    <header>
+        <nav id="options-menu">
+            <ul id="options-list">
+                <li id="showprofiles-option"> Show Profiles </li>
+                <li id="showfriends-option"> Show FriendList </li>
+                <li id="show-privatechat"> Show Private Chats</li>
+                <li id=""> PLACEHOLDER </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="globalchat-section">
+        <h1 id="globalchat-title"> Global Chat <br> Talk with everybody online </h1>
+        <div id="globalChat"></div>
+        <textarea id="global-textarea"></textarea>
+        <input type="button" id="send-globalmsg" value="< Send">
+    </div>
+
+    <div id="notifications-section">
+        <h2 id="notifications-title"> (-- NOTIFICATIONS --) </h2>
+        <nav id="notifications-tabs">
+            <ul>
+                <li id="friendreq-tab"> Friend Requests </li>
+                <li id="messages-tab"> New Messages </li>
+                <li id="global-tab"> GLOBAL </li>
+            </ul>
+        </nav>
+        <ul id="notifications-friendreq">
+            <li> Placeholder request from: <b class="friendreq-sender"> SOMEONE1 </b> | (X Time ago) </li>
+
+        </ul>
+        <ul id="notifications-messages">
+            <li>NEW DM FROM SOMEONE BLABLA</li>
+        </ul>
+        <ul id="notifications-global">
+            <li>ANNOUNCEMENT OR SOMETHING IDK!</li>
+        </ul>
+
+    </div>
+
+    <div id="notif-options">
+        <input type="button" id="notif-option1" value="Accept Request">
+        <input type="button" id="notif-option2" value="Decline Request">
+    </div>
+
+    <div id="profiles-section">
+        <div id="profile">
+            <h1 id="profile-name">Your name</h1>
+            <textarea readonly maxlength="3" cols="3" rows="1" id="profile-age">00</textarea>
+            <hr>
+            <textarea maxlength="256" cols="32" rows="10" id="profile-description" readonly
+                placeholder="Maximum 256 characters"></textarea>
+            <hr>
+            <input type="button" id="edit-profiledesc" value="Edit description">
+            <input type="button" id="save-profile" value="Save changes">
+        </div>
+
+        <div id="stranger-profile">
+            <h1 id="stranger-profilename">stranger name</h1>
+            <h2 id="stranger-profileage">stranger age</h2>
+            <hr>
+            <textarea cols="32" rows="10" id="stranger-profiledesc" readonly>
+Click on the name of an user in the chat to display the profile of that user.
+            </textarea>
+            <hr>
+            <input type="button" id="send-friendreq" value="Send friend request">
+            <input type="button" id="message-stranger" value="Send private message">
+        </div>
+    </div>
+
+    <div id="friendlist-section">
+        <div id="friends-container">
+            <h2 id="friendlist-info">Here you can see all your friends, if they are online, and message them! </h2>
+            <ul id="friend-list">
+                <li id=""> <b class="friend-name">sdsds</b> Work In Progress </li>
+                <li id=""> <b class="friend-name"> [NAMENAME] </b> - Status: Offline </li>
+
+            </ul>
+        </div>
+        <div id="friend-options">
+            <input type="button" id="fr-sendDM" value="Send/View DMs">
+            <input type="button" id="remove-friend" value="Remove Friend">
+            <!-- <input type="button" id="show-frprofile" value="Show Profile"> -->
+        </div>
+    </div>
+
+        <div id="privatechat-section">
+            <h1 id="privatechat-title">Your DMs <br> Talk privately with people </h1>
+            <div id="privateChat"></div>
+            <textarea id="private-textarea"></textarea>
+            <input type="button" id="send" value="< Send">
+        </div> 
+    
+   
+</body>
+
+</html>

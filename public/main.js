@@ -1,26 +1,27 @@
 
-
 $(document).ready(function () {
 
-   
-
     if ($.cookie('sessionkey') == undefined) {
+       if(window.location.href == 'https://monthly-devoted-pug.ngrok-free.app/webchat.html') {
+          window.location.replace('https://monthly-devoted-pug.ngrok-free.app/index.html')
+       }
+     
         $('#register').css('visibility', 'visible')
         $('#loginScreen').css('visibility', 'visible')
     }
     else {
+     
         connectToServer('loadProfile', $.cookie('sessionkey'), '', '', '', '')
-        //
     }
     $('input').on('mouseup', function (evt) {
         evt.preventDefault()
 
 
         switch (this.id) {
-            case 'send':
-                text = $('#text').val()
+            case 'send-globalmsg':
+                text = $('#global-textarea').val()
                 doSend('&nbsp;' + ` [${username}] ` + ' --> ' + text, 'globalmsg')
-                $('#text').val('')
+                $('#global-textarea').val('')
 
                 break
             case 'setUser':
@@ -32,6 +33,7 @@ $(document).ready(function () {
                         alert('Name or password cant be empty!')
                         break
                     }
+                
                     connectToServer('newUser', user, password)
                 }
                 else {
@@ -73,6 +75,7 @@ $(document).ready(function () {
                 break
 
             case 'notif-option1':
+                //decline request
             case 'notif-option2':
 
                 option = $(this).val()
@@ -84,7 +87,7 @@ $(document).ready(function () {
                 }
                 else if (option == 'Decline Request') {
                     $('.selected').remove()
-                    //connectToDataBase('removeNotifications')
+
                 }
                 break         
         }
@@ -111,39 +114,23 @@ $(document).ready(function () {
         switch (this.id) {
 
             case 'showprofiles-option':
-                 $('#profiles-section').css({
-                    opacity: '1',
-                    display: 'block',
-                    transition: 'opacity 0.3s ease-in-out',
-                    'z-index': 1
-                 })
-                 $('#friendlist-section').css({               
-                    opacity: '0',
-                    display: 'none',
-                    transition: 'opacity 0.3s ease-in-out',
-                    'z-index': -1
-                 })
+                $('#privatechat-section').css({display: 'none'})
+                $('#friendlist-section').css({display: 'none'})
+                $('#profiles-section').css({display: 'block'})
             break
 
             case 'showfriends-option':
-                $('#profiles-section').css({               
-                    opacity: '0',
-                    display: 'none',
-                    transition: 'opacity 0.3s ease-in-out',
-                    'z-index': -1
-                 })
-                 $('#friendlist-section').css({               
-                    opacity: '1',
-                    display: 'block',
-                    transition: 'opacity 0.3s ease-in-out',
-                    'z-index': 1
-                 })
+                 $('#profiles-section').css({display: 'none'})
+                 $('#privatechat-section').css({display: 'none'})
+                 $('#friendlist-section').css({display: 'block'})
             break
 
-            case 'switch-chat':
-                 
+            case 'show-privatechat':
+                $('#profiles-section').css({display: 'none'})
+                $('#friendlist-section').css({display: 'none'})
+                $('#privatechat-section').css({display: 'block'})
             break
-
+ 
             case 'friendreq-tab':
                 $('#notifications-messages').css('visibility', 'hidden')
                 $('#notifications-global').css('visibility', 'hidden')
@@ -212,11 +199,12 @@ function connectToServer(action, name, password, age, description, friend) {
 
                     $.cookie('sessionkey', data.sessionKey)
                     alert(`User: "${name}" created successfully!`)
-                    location.reload()
+                    window.location.replace('https://monthly-devoted-pug.ngrok-free.app/webchat.html')
 
                 case 'checkLoginCredentials':
 
                     if (data.message == 'LOGIN SUCCESSFUL!') {
+                        window.location.replace('https://monthly-devoted-pug.ngrok-free.app/webchat.html')
                         $('#register').css('visibility', 'hidden')
                         $('#loginScreen').css('visibility', 'hidden')
                         $.cookie('sessionkey', data.sessionKey[0][0].sessionkey)
