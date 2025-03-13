@@ -19,7 +19,6 @@ app.use(express.static('public'));
 const crypto = require('crypto');
 const { connection } = require('websocket');
 
-
 const webSocketServer = new WebSocketServer({
     httpServer: server,
     autoAcceptConnections: false 
@@ -44,26 +43,35 @@ webSocketServer.on("request", function (req) {
                 case 'globalmsg':         
 
                         for (let [user, conn] of connectionsListM) {
-                            if(conn.connected) {
-                                  messagedata = JSON.stringify({type: 'globalmsg', message: message.msg})
-                                  conn.sendUTF(messagedata);  
-                        }
+                        //     if(conn.connected) {
+                        //           messagedata = JSON.stringify({type: 'globalmsg', message: message.msg})
+                        //           conn.sendUTF(messagedata);  
+                        // }
+                        if(conn[0].connected) {
+                            messagedata = JSON.stringify({type: 'globalmsg', message: message.msg})
+                            conn[0].sendUTF(messagedata);  
+                  }
                     }
-                case 'privatemsg':
-                    //TODO: Retrieve the sessionkey of the receiver by looking for
-                    //TODO: the name on the database and check if the user is connected before
-                    //TODO: sending the message.
-            
-                        if (connectionsListM.has)
-                break
+                     
                 if((globalMSGsList.length - 1) > 10) {
                     globalMSGsList = []
                 }
                 globalMSGsList.push(message.msg)
+                
+                case 'privatemsg':
+                    // console.error("test", message.to)
+                    user = message.user.trim()
+                    if (connectionsListM.has(user)) {
+                        messagedata = JSON.stringify({type: 'privatemsg', message: message.msg})
+                        connectionsListM.get(user)[0].sendUTF(messagedata)
+                    }
+
                 break 
 
                 case 'sentkey':
-                        connectionsListM.set(message.msg, connection)
+                      //  connectionsListM.set(message.msg, connection)
+                        connectionsListM.set(message.user, [ connection, message.msg ])
+
                 break
             }
         });
@@ -71,7 +79,7 @@ webSocketServer.on("request", function (req) {
         connection.on("close", function () {
          // console.log('Connection closed');
 
-            connectionsListM.delete(connection)
+           // connectionsListM.delete(connection)
         });
     } else {
         req.reject();
@@ -150,13 +158,13 @@ async function dataBaseConnection(action, name, password, age, description, frie
 
             case 'sendFriendRequest':        
                 const newFriendReq = "INSERT INTO friendrequests SET receiver = ?, sender = ?, content = ?"         
-                const receiverkey = await con.query('SELECT sessionkey FROM users WHERE username = ?', [friend])
+             //   const receiverkey = await con.query('SELECT sessionkey FROM users WHERE username = ?', [friend])
                 
                 
                 await con.query(newFriendReq, [friend, name,  `<li> Friend request from: <b class="friendreq-sender"> ${name} </b> </li>`])
                         
 
-                sendNotification('newFriendReq', `<li> Friend request from: <b class="friendreq-sender"> ${name} </b> </li>`, receiverkey, )
+                sendNotification('newFriendReq', `<li> Friend request from: <b class="friendreq-sender"> ${name} </b> </li>`, friend, )
                 return { message: 'Friend request successfully sent' }
 
             case 'loadAllNotifications':
@@ -188,6 +196,11 @@ async function dataBaseConnection(action, name, password, age, description, frie
                 await con.query('DELETE FROM friendrequests WHERE receiver = ?', [name])
             
                 break
+
+            case 'getSessionKey':
+
+            
+                break
         }
     } catch (err) {
         console.error('Database operation error:', err);
@@ -197,13 +210,13 @@ async function dataBaseConnection(action, name, password, age, description, frie
     }
 }
 //newFriendReq, newAnnouncement, newDM
-function sendNotification(type, notif, receiverkey) {
+function sendNotification(type, notif, friend) {
 
     switch (type) {
         case 'newFriendReq':
             const notifdata = JSON.stringify({ type: type, notif: notif })
-            s = connectionsListM.get(receiverkey[0][0].sessionkey)
-            s.sendUTF(notifdata)
+            s = connectionsListM.get(friend)
+            s[0].sendUTF(notifdata)
             
            // conn.sendUTF(notifdata)
         break

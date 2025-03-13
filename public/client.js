@@ -25,8 +25,8 @@ function onError(error) {
     console.log('Error: ' + error.data)
 }
 
-function doSend(msg, type, to) {
-    const message = JSON.stringify({ msg: msg, type: type, to: to });
+function doSend(msg, type, user) {
+    const message = JSON.stringify({ msg: msg, type: type, user: user });
     wsocket.send(message);
 }
 
@@ -41,7 +41,7 @@ function onMessage(msgc){
         
             switch (msgdata.type) {
                 case 'retrievekey':
-                    doSend($.cookie('sessionkey'), 'sentkey') 
+                    doSend($.cookie('sessionkey'), 'sentkey', $('#profile-name').text()) 
                 break
 
                 case 'globalmsg':
@@ -54,8 +54,7 @@ function onMessage(msgc){
                 break
 
                 case 'privatemsg':
-                    alert('testing dms')
-                    $('#privateChat').append(`${msgdata.message}`)
+                    $('#privateChat').append(`<p id="chat-user"> ${msgdata.message} </p>`)
 
                 break
             }

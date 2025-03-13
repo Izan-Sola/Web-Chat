@@ -19,15 +19,17 @@ $(document).ready(function () {
 
         switch (this.id) {
             case 'send-globalmsg':
+
                 text = $('#global-textarea').val()
                 doSend('&nbsp;' + ` [${username}] ` + ' --> ' + text, 'globalmsg', 'all')
                 $('#global-textarea').val('')
 
-                break
+            break
+            
             case 'setUser':
                 if ($.cookie('sessionkey') == undefined) {
-                    password = $('#newpassword').val()
-                    user = $('#newusername').val()
+                    password = $('#password').val()
+                    user = $('#username').val()
 
                     if (password == '' || user == '') {
                         alert('Name or password cant be empty!')
@@ -103,9 +105,10 @@ $(document).ready(function () {
             break
 
             case 'send-privatemsg':
-                text = $('#global-textarea').val()
+                text = $('#private-textarea').val()
+                $('#privateChat').append('<p id="chat-user"> &nbsp;' + ` [${username}]  -->  ${text} </p>`)
                 doSend('&nbsp;' + ` [${username}] ` + ' --> ' + text, 'privatemsg', selectedFriend)
-                $('#global-textarea').val('')
+                $('#private-textarea').val('')
             break
         }
     });

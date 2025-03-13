@@ -1,6 +1,8 @@
 body {
     display: block;
     margin: auto;
+    background-color: rgb(245, 245, 245);
+    z-index: -1;
 }
 
 
@@ -13,23 +15,25 @@ body {
     margin-top: 30px;
     resize: vertical;
 }
-#privateChat {
-    width: 350px;
-}
+
 #globalchat-section {
     position: absolute;
     width: 350px;
     left: 440px;
 }
+#privatechat-section {
 
-#global-textarea {
+    position: absolute;
+    width: 350px;
+}
+#global-textarea, #private-textarea {
     margin-top: 10px;
     width: 100%;
     height: 40px;
     resize: vertical;
 }
 
-#send-globalmsg {
+#send-globalmsg, #send-privatemsg {
     position: relative;
     top: -20px;
     width: 125px;
