@@ -55,6 +55,7 @@ webSocketServer.on("request", function (req) {
                      
                 if((globalMSGsList.length - 1) > 10) {
                     globalMSGsList = []
+                    
                 }
                 globalMSGsList.push(message.msg)
                 
@@ -62,7 +63,7 @@ webSocketServer.on("request", function (req) {
                     // console.error("test", message.to)
                     user = message.user.trim()
                     if (connectionsListM.has(user)) {
-                        messagedata = JSON.stringify({type: 'privatemsg', message: message.msg})
+                        messagedata = JSON.stringify({type: 'privatemsg', message: message.msg, user: user})
                         connectionsListM.get(user)[0].sendUTF(messagedata)
                     }
 

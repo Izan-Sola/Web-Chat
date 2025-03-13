@@ -1,6 +1,8 @@
 
 $(document).ready(function () {
 
+  
+
     if ($.cookie('sessionkey') == undefined) {
        if(window.location.href == 'https://monthly-devoted-pug.ngrok-free.app/webchat.html') {
           window.location.replace('https://monthly-devoted-pug.ngrok-free.app/index.html')
@@ -101,7 +103,14 @@ $(document).ready(function () {
 
                 selectedFriend = $('.selected .friend-name').text()
 
-                $('#privatechat-title').html(`Your private chat with ${selectedFriend}`);
+                privMsgsList = getDMs(selectedFriend.trim())
+                
+                if(privMsgsList != 'none') {
+                    $.each(privMsgsList, function (index, element) { 
+                        $('#privateChat').append(element)
+                    });
+                }
+                $('#privatechat-title').html(`Your private chat with <b>${selectedFriend}</b>`);
             break
 
             case 'send-privatemsg':
@@ -109,6 +118,7 @@ $(document).ready(function () {
                 $('#privateChat').append('<p id="chat-user"> &nbsp;' + ` [${username}]  -->  ${text} </p>`)
                 doSend('&nbsp;' + ` [${username}] ` + ' --> ' + text, 'privatemsg', selectedFriend)
                 $('#private-textarea').val('')
+           
             break
         }
     });
@@ -152,6 +162,7 @@ $(document).ready(function () {
                 $('#profiles-section').css({display: 'none'})
                 $('#friendlist-section').css({display: 'none'})
                 $('#privatechat-section').css({display: 'block'})
+
             break
  
             case 'friendreq-tab':
@@ -191,7 +202,6 @@ $(document).ready(function () {
         $(this).addClass('selected');    
      } })
 });
-
 
 function connectToServer(action, name, password, age, description, friend) {
     fetch('https://monthly-devoted-pug.ngrok-free.app/databaseupdates', {

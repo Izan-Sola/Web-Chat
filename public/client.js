@@ -34,6 +34,16 @@ window.addEventListener('load', function () {
     openConnection()
 })
 
+privateMessagesM = new Map()
+tempList = []
+
+function getDMs(user) {
+
+    if (privateMessagesM.has(user)) {
+        return privateMessagesM.get(user)
+    }
+    return 'none'
+}
 
 function onMessage(msgc){
 
@@ -49,13 +59,28 @@ function onMessage(msgc){
                 break
 
                 case 'newFriendReq':
-                    alert('TEST: FRIEND REQUEST RECEIVED!!')
+                    alert('You have received a friend request')
                     $('#notifications-friendreq').append(`${msgdata.notif}`)
                 break
 
                 case 'privatemsg':
-                    $('#privateChat').append(`<p id="chat-user"> ${msgdata.message} </p>`)
+                    test = msgdata.message.match(/\[([^\]]+)\]/)
 
+                    if (privateMessagesM.has(test)) {
+                        tempList = privateMessagesM.get(test)
+                    }
+                    if((tempList.length - 1) > 10) {
+                        tempList = []
+                    }
+
+                    tempList.push(msgdata.message)
+                    privateMessagesM.set(test[1], tempList)
+                    console.log(privateMessagesM)
+            
+                    if ($('#privatechat-title').children().text().trim() == test[1]) {
+                        $('#privateChat').append(`<p id="chat-user"> ${msgdata.message} </p>`)
+                    }
+       
                 break
             }
 }
