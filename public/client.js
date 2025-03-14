@@ -45,6 +45,15 @@ function getDMs(user) {
     return 'none'
 }
 
+function addDMs(user, DM) {
+
+    if (privateMessagesM.has(user)) {
+        tempList = privateMessagesM.get(user)
+        tempList.push(DM)
+        privateMessagesM.set(user, tempList)
+    }
+}
+
 function onMessage(msgc){
 
            msgdata = JSON.parse(msgc.data)

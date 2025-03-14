@@ -53,7 +53,7 @@ webSocketServer.on("request", function (req) {
                   }
                     }
                      
-                if((globalMSGsList.length - 1) > 10) {
+                if((globalMSGsList.length - 1) > 15) {
                     globalMSGsList = []
                     
                 }
@@ -196,7 +196,7 @@ async function dataBaseConnection(action, name, password, age, description, frie
                 const addFriend = await con.query('INSERT INTO friends SET user1 = ?, user2 = ?',  [name, friend.trim()])
                 await con.query('DELETE FROM friendrequests WHERE receiver = ?', [name])
             
-                break
+                return { added: 'holitest' }
 
             case 'getSessionKey':
 
@@ -217,6 +217,7 @@ function sendNotification(type, notif, friend) {
         case 'newFriendReq':
             const notifdata = JSON.stringify({ type: type, notif: notif })
             s = connectionsListM.get(friend)
+            console.error(s, s[0])
             s[0].sendUTF(notifdata)
             
            // conn.sendUTF(notifdata)

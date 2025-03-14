@@ -87,7 +87,7 @@ $(document).ready(function () {
                 if (option == 'Accept Request') {
                     newFriend = $('.selected').children().text()
                     alert(newFriend) 
-                    connectToServer('addFriend', username, '', '', '', newFriend, '')
+                    connectToServer('addFriend', username, '', '', '', newFriend)
                 }
                 else if (option == 'Decline Request') {
                     $('.selected').remove()
@@ -104,19 +104,24 @@ $(document).ready(function () {
                 selectedFriend = $('.selected .friend-name').text()
 
                 privMsgsList = getDMs(selectedFriend.trim())
-                
+
+                $('#privateChat').html('')
+
                 if(privMsgsList != 'none') {
                     $.each(privMsgsList, function (index, element) { 
-                        $('#privateChat').append(element)
+                        $('#privateChat').append(`<p id="chat-user"> ${element} </p>`)
                     });
-                }
+                } 
                 $('#privatechat-title').html(`Your private chat with <b>${selectedFriend}</b>`);
             break
 
             case 'send-privatemsg':
                 text = $('#private-textarea').val()
                 $('#privateChat').append('<p id="chat-user"> &nbsp;' + ` [${username}]  -->  ${text} </p>`)
-                doSend('&nbsp;' + ` [${username}] ` + ' --> ' + text, 'privatemsg', selectedFriend)
+                
+                DM = '&nbsp;' + ` [${username}] ` + ' --> '
+                addDMs(selectedFriend, DM)
+                doSend(DM + text, 'privatemsg', selectedFriend)
                 $('#private-textarea').val('')
            
             break
@@ -285,18 +290,20 @@ function connectToServer(action, name, password, age, description, friend) {
                 case 'addFriend':
 
                     alert('New friend added successfully!')
+                    console.log(data.added)
                     connectToServer('loadFriendList', username)
-
+                    //window.location.reload()
                     break
 
                 case 'loadFriendList':
                     $('#friend-list').html('')
-                    $.each(data.friendlist, function (index, element) { 
+                    friends = data.friendlist;
+                    $.each(friends, function (index, element) { 
                        
                         $('#friend-list').append(`<li> <b class="friend-name"> ${element} </b> - Status: Offline </li>`)    
-                        console.log(element)             
+                          
                     });
-                    friends = data.friendlist;
+                   
                     break
 
                 case 'loadAllNotifications':
