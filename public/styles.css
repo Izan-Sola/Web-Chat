@@ -191,6 +191,7 @@ body {
     padding-left: 4.65em;
     text-indent:-4.65em;
     cursor: pointer;
+    word-break: break-all;
     font-weight: 500;
     font-size: 18px;
 }
