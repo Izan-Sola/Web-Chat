@@ -1,0 +1,351 @@
+
+body {
+    display: block;
+    margin: auto;
+    background-color: var(--c6);
+    z-index: -1;
+}
+* {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#globalChat, #privateChat {
+    border: 8px var(--c1) solid;
+    border-radius: 5px;
+    width: 100%;
+    height: 505px;
+    overflow: scroll;
+    overflow-wrap: break-word;
+    margin-top: 30px;
+    resize: vertical;
+    background-color: var(--c3);
+}
+*::-webkit-scrollbar{
+    display: none;
+
+}
+
+#globalchat-section {
+    position: absolute;
+    width: 350px;
+    left: 440px;
+}
+#privatechat-section {
+
+    position: absolute;
+    width: 350px;
+}
+#global-textarea, #private-textarea {
+    margin-top: 10px;
+    width: 100%;
+    height: 40px;
+    resize: vertical;
+}
+
+#send-globalmsg, #send-privatemsg {
+    position: relative;
+    top: -20px;
+    width: 125px;
+    height: 45px;
+}
+
+#privatechat-section {
+    display: none;
+    position: absolute;
+    left: 850px;
+}
+
+#overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.76); 
+}
+
+#loginScreen {
+    visibility: hidden;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 375px;
+    height: 475px;
+    left: 40%;
+    top: 10%;;
+    z-index: 3;
+    border: 4px solid rgb(255, 255, 255);
+    padding: 10px;
+
+    h1{
+        text-align: center;
+    }
+    label, h1 {
+        width: 100%;
+        color: var(--c8);
+        
+    }
+    label {
+        margin-bottom: -30px;
+        font-size: 26px;
+    }
+ 
+    input[type="text"],input[type="password"] {
+        width: 100%;
+        height: 35px;
+        font-size: 24px;
+    }
+    input[type="button"] {
+        width: 45%;
+        height: 35px;
+        font-size: 20px;
+        margin-bottom: -40px;
+    }
+  
+
+}
+
+#register {
+    visibility: hidden;
+    position: absolute;
+    z-index: 3;
+    left: 200px;
+    top: 350px;
+
+    h1 {
+        color: var(--c8);
+    }
+}
+
+#profile-name, #stranger-profilename {
+    margin-top: 6px;
+}
+#profile-age, #stranger-profileage {
+    margin-top: -10px;
+}
+#profiles-section {
+    position: absolute;
+    left: 850px;
+    top: 65px;
+}
+
+#profile-description, #stranger-profiledesc, #profile-age {
+    scrollbar-width:none;
+    resize: none;
+    padding: 5px;
+}
+#stranger-profiledesc {
+
+}
+#profile-age {
+    border: none;
+    font-size: 22px;
+}
+
+#profile, #stranger-profile {
+    border: 1px black solid;
+    padding: 0px 10px 10px 10px;
+    margin-top: 5px;
+}
+
+#globalchat-title, #privatechat-title {
+    text-align: center;
+    width: 100%;
+    background-color: var(--c4);
+    border: 8px solid var(--c1);
+    color: var(--c8);
+    border-radius: 5px;
+}
+
+#options-menu {
+    border: 8px solid var(--c1);
+    width: 1196px;
+    height: 50px;
+
+    #options-list {
+        display: flex;
+        flex-direction: row;
+        list-style: none;
+        justify-content: space-evenly;
+        border: 1px dotted gray;
+        padding: 2px;
+
+        li {
+            border-left: 1px solid gray;
+            border-right: 1px solid gray;
+            padding: 0px 5px 0px 5px;
+        
+        }:hover {
+            background-color: rgba(128, 128, 128, 0.411);
+            cursor: pointer;
+        }
+    }  
+
+}
+
+#edit-profiledesc {
+    z-index: 99;
+}
+.edit-mode {
+    
+    h1, #edit-profiledesc {
+        color: gray;
+    
+    }
+
+    textarea {
+        border: 2.5px dashed black;
+    }
+}
+
+#chat-user {
+    z-index: 4;
+    padding: 4px 8px 4px 4.65em;
+    text-indent:-4.65em;
+    cursor: pointer;
+    word-break: break-all;
+    font-weight: 500;
+    font-size: 18px;
+    width: fit-content;
+    max-width: 70%;
+    border: 6px solid var(--c1);
+    border-left: none;
+    font-weight: bolder;
+    background-color: var(--c2);
+    color: var(--c8);
+    border-radius: 0px 0px 10px 0px;
+}
+
+#friendlist-section {
+    display: none;
+    position: absolute;
+    left: 850px;
+    top: 75px;
+    border: 2px black solid;
+    width: 350px;
+    height: 640px;
+
+    #friends-container {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        z-index: -15;
+    }
+
+    #friend-list {
+        margin-top: 0px;
+
+
+        li{
+            margin-left: -40px;
+            list-style: none;
+            padding: 15px;
+            border-bottom: 1px black solid;
+            text-indent: 5px;
+            font-size: 14px;
+            background-color: rgba(128, 128, 128, 0.308);
+
+        }:hover {
+            background-color: rgba(128, 128, 128, 0.555);
+        }
+    }
+
+    #friendlist-info {
+        font-size: 16px;
+        padding-bottom: 10px;
+        border-bottom: 3px dashed black;
+        text-align: center;
+    }
+}
+
+#notifications-section {
+    width: 360px;
+    height: 620px;
+    border: 8px solid var(--c1);
+    background-color: var(--c3);
+    border-radius: 5px;
+    position: absolute;
+    left: 25px;
+    top: 80px;
+
+    #notifications-title {
+        text-align: center;
+        font-size: 22px;
+        font-weight: bolder;
+        color: white;
+        padding-top: 10px;
+        margin-top: 0;
+        margin-bottom: 0;
+        background-color: var(--c4);
+        border-bottom: 3px solid var(--c1);
+        padding-bottom: 10px;
+    }
+
+    #notifications-tabs>ul {
+        padding: 0px 0px 0px 0px;
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        border-bottom: 6px solid var(--c1);
+        padding-bottom: 16px;
+        z-index: 4;
+        font-size: 16px;
+        font-weight: bolder;
+        color: rgb(252, 227, 252);
+        li {
+            border-left: 3px var(--c1) solid;
+            border-right: 3px var(--c1) solid;
+            background-color: var(--c4);
+            border-radius: 5px;
+            padding: 5px;
+        }:hover {
+            background-color: rgba(235, 33, 76, 0.438);
+            cursor: pointer;
+        }
+    }
+
+    
+    #notifications-friendreq, 
+    #notifications-messages, 
+    #notifications-global {
+                width: 89%;
+                list-style: none;
+                position: absolute;
+                li{
+                    margin-left: -40px;
+                    background-color: var(--c5);     
+                    border: 4px solid var(--c1);
+                    border-left: none;
+                    border-right: none;
+                    font-size: 19px;
+                    color: rgb(41, 16, 37);
+                    font-weight: bolder;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                }:hover {
+                    background-color: rgba(235, 33, 76, 0.438);
+                    cursor: pointer;
+                }
+    }
+
+}
+
+#notif-option1, #notif-option2 {
+    position: relative;
+    top: 665px;
+    left: 25px;
+}
+
+#notifications-messages, 
+    #notifications-global {
+        visibility: hidden;
+    }
+
+#friend-options {
+    position: relative;
+    top: 350px;
+}
+.selected {
+    background-color: rgb(201, 66, 95) !important;
+    color: white !important;
+}

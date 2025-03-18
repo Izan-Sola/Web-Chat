@@ -26,6 +26,8 @@ $(document).ready(function () {
                 doSend('&nbsp;' + ` [${username}] ` + ' --> ' + text, 'globalmsg', 'all')
                 $('#global-textarea').val('')
 
+                $('#globalChat').scrollTop(999999999999);
+
             break
             
             case 'setUser':
@@ -270,10 +272,9 @@ function connectToServer(action, name, password, age, description, friend) {
 
                     $.each(data.globalHistory, function (index, globalmsg) { 
                         $('#globalChat').append( `<p id=chat-user> ${globalmsg} </p>`)
-                        console.log(data.globalHistory)
+
                     });
-                    
-    
+ 
                     break
 
                 case 'loadStrangerProfile':

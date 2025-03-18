@@ -1,0 +1,11 @@
+:root {
+    --c1: rgb(65, 0, 56); /*mostly borders*/
+    --c2:  rgb(167, 35, 167); /*msg, tabs bg?*/
+    --c3: rgb(187, 116, 163); /*some bgs*/
+    --c4: rgb(175, 76, 159); /*some bgs*/
+    --c5: rgb(230, 144, 215); /*notif bgs*/
+    --c6:  rgb(196, 77, 146); /*page bg*/
+    --c7: ; /*notif highlights*/
+    --c8: white; /*text color 1*/
+
+}
