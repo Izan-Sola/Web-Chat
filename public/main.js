@@ -3,20 +3,20 @@ function swapTheme(b) {
             $('#theme').attr("href", `themes/theme${b}.css`)
             switch (b) {
                 case 1:
-                    type="Purple"; break
+                    type="1-Purple"; break
                 case 2:
-                    type="Green"; break
+                    type="2-Green"; break
                 case 3:
-                    type="Black"; break
+                    type="3-Black"; break
                 case 4:
-                    type="Blue"; break
+                    type="4-Blue"; break
                 case 5: 
-                    type="Coffe"; break
+                    type="5-Coffe"; break
                 case 6:
-                    type="Undecorated"; break
+                    type="6-Undecorated"; break
             }
-            localStorage.setItem('theme', b+type)
-            $('#swap-theme').html(`Swap Theme (Current: ${type}`)
+            localStorage.setItem('theme', `${type}`)
+            $('#swap-theme').html(`Swap Theme (Current: ${type})`)
 }
 
 //TODO: SAVE THEME PREFERENCE
@@ -49,12 +49,15 @@ $(document).ready(function () {
 
         switch (this.id) {
             case 'send-globalmsg':
-
+              
                 text = $('#global-textarea').val()
-                doSend('&nbsp;' + ` [${username}] ` + ' --> ' + text, 'globalmsg', 'all')
-                $('#global-textarea').val('')
+    
+                if (text != '') {
+                    doSend('&nbsp;' + ` [${username}] ` + ' --> ' + text, 'globalmsg', 'all')
+                    $('#global-textarea').val('')
 
-                $('#globalChat').scrollTop(999999999999);
+                    $('#globalChat').scrollTop(999999999999);
+                }
 
             break
             
@@ -139,7 +142,9 @@ $(document).ready(function () {
 
                 if(privMsgsList != 'none') {
                     $.each(privMsgsList, function (index, element) { 
+                        console.log('')
                         $('#privateChat').append(`<p id="chat-user"> ${element} </p>`)
+                        alignMessage(n[1], 'private')
                     });
                 } 
                 $('#privatechat-title').html(`Your private chat with <b>${selectedFriend}</b>`);
@@ -148,7 +153,7 @@ $(document).ready(function () {
             case 'send-privatemsg':
                 text = $('#private-textarea').val()
                 $('#privateChat').append('<p id="chat-user"> &nbsp;' + ` [${username}]  -->  ${text} </p>`)
-                
+                alignMessage(n, 'private')
                 DM = '&nbsp;' + ` [${username}] ` + ' --> '
                 addDMs(selectedFriend, DM)
                 doSend(DM + text, 'privatemsg', selectedFriend)
@@ -309,7 +314,9 @@ function connectToServer(action, name, password, age, description, friend, prefe
 
                     $.each(data.globalHistory, function (index, globalmsg) { 
                         $('#globalChat').append( `<p id=chat-user> ${globalmsg} </p>`)
-
+                        n = globalmsg.match(/\[([^\]]+)\]/)
+                        alignMessage(n, 'global')
+        
                     });
  
                     break

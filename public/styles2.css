@@ -208,21 +208,7 @@ body {
 }
 
 #chat-user {
-    z-index: 4;
-    padding: 4px 8px 4px 4.65em;
-    text-indent:-4.65em;
-    cursor: pointer;
-    word-break: break-all;
-    font-weight: 500;
-    font-size: 18px;
-    width: fit-content;
-    max-width: 70%;
-    border: 6px solid var(--c1);
-    border-left: none;
-    font-weight: bolder;
-    background-color: var(--c2);
-    color: var(--c8);
-    border-radius: 0px 0px 10px 0px;
+
 }
 
 #friendlist-section {
@@ -367,4 +353,41 @@ body {
 .selected {
     background-color: var(--c7) !important;
     color: var(--c8) !important;
+}
+
+.nm {
+    z-index: 4;
+    padding: 4px 8px 4px 4.65em;
+    text-indent:-4.65em;
+    cursor: pointer;
+    word-wrap: break-word;
+    font-weight: 500;
+    font-size: 18px;
+    width: fit-content;
+    max-width: 70%;
+    border: 6px solid var(--c1);
+    border-left: none;
+    font-weight: bolder;
+    background-color: var(--c2);
+    color: var(--c8);
+    border-radius: 0px 0px 10px 0px;
+}
+.m {
+    z-index: 4;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 3px;
+    padding-right: 5px;
+    margin-left: 5%;
+    text-indent: -0.15em;
+    word-wrap: break-word;
+    font-weight: 500;
+    font-size: 18px;
+    min-width: 92%;
+    border: 6px solid var(--c1);
+    border-right: none;
+    font-weight: bolder;
+    background-color: var(--c2);
+    color: var(--c8);
+    border-radius: 0px 0px 0px 10px;
 }

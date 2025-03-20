@@ -27,7 +27,7 @@
         border-top: 2px solid black !important;
     }
 }
-#chat-user {
+.n, .nm {
     border: none !important;
 }
 

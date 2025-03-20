@@ -56,6 +56,19 @@ function addDMs(user, DM) {
     }
 }
 
+function alignMessage(n, chat) { 
+    c = $('#'+chat+'Chat').children()
+    console.log(n[1], $('#profile-name').text())
+    if ($('#profile-name').text() == n[1]) {
+ 
+        $(c[c.length-1]).addClass("m")         
+    } 
+    else {
+        $(c[c.length-1]).addClass("nm")      
+    }
+
+ }
+
 function onMessage(msgc){
 
            msgdata = JSON.parse(msgc.data)
@@ -68,12 +81,8 @@ function onMessage(msgc){
                 case 'globalmsg':
                     $('#globalChat').append(`<p id="chat-user"> ${msgdata.message} </p>`)
                     n = msgdata.message.match(/\[([^\]]+)\]/)
-
-                    if ($('#profile-name').text() == n[1]) {
-                        c = $('#globalChat').children()
-                        console.log(c[c.length-1])
-                    
-                    }
+                    alignMessage(n, 'global')
+    
                 break
 
                 case 'newFriendReq':
@@ -82,23 +91,22 @@ function onMessage(msgc){
                 break
 
                 case 'privatemsg':
-                    test = msgdata.message.match(/\[([^\]]+)\]/)
-
-                    if (privateMessagesM.has(test)) {
-                        tempList = privateMessagesM.get(test)
+                    n = msgdata.message.match(/\[([^\]]+)\]/)
+                    if (privateMessagesM.has(n)) {
+                        tempList = privateMessagesM.get(n)
                     }
                     if((tempList.length - 1) > 10) {
                         tempList = []
                     }
 
                     tempList.push(msgdata.message)
-                    privateMessagesM.set(test[1], tempList)
-                    console.log(privateMessagesM)
-            
-                    if ($('#privatechat-title').children().text().trim() == test[1]) {
+                    privateMessagesM.set(n[1], tempList)
+
+                    if ($('#privatechat-title').children().text().trim() == n[1]) {
                         $('#privateChat').append(`<p id="chat-user"> ${msgdata.message} </p>`)
                     }
-       
+                 
+                    alignMessage(n[1], 'private')
                 break
             }
 }
