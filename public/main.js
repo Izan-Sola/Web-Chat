@@ -137,13 +137,14 @@ $(document).ready(function () {
                 selectedFriend = $('.selected .friend-name').text()
 
                 privMsgsList = getDMs(selectedFriend.trim())
-
+                console.log(privMsgsList)
                 $('#privateChat').html('')
 
                 if(privMsgsList != 'none') {
                     $.each(privMsgsList, function (index, element) { 
                         console.log('')
                         $('#privateChat').append(`<p id="chat-user"> ${element} </p>`)
+                        n = element.match(/\[([^\]]+)\]/)
                         alignMessage(n[1], 'private')
                     });
                 } 
@@ -152,10 +153,11 @@ $(document).ready(function () {
 
             case 'send-privatemsg':
                 text = $('#private-textarea').val()
+                if (text == '') return
                 $('#privateChat').append('<p id="chat-user"> &nbsp;' + ` [${username}]  -->  ${text} </p>`)
-                alignMessage(n, 'private')
+                alignMessage(username, 'private')
                 DM = '&nbsp;' + ` [${username}] ` + ' --> '
-                addDMs(selectedFriend, DM)
+                addDMs(selectedFriend.trim(), DM)
                 doSend(DM + text, 'privatemsg', selectedFriend)
                 $('#private-textarea').val('')
            
