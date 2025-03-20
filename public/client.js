@@ -19,6 +19,7 @@ function onOpen() {
 }
 function onClose(reason) {
     console.log('Connection closed' + reason)
+    
 }
 
 function onError(error) {
@@ -32,6 +33,7 @@ function doSend(msg, type, user) {
 
 window.addEventListener('load', function () {
     openConnection()
+ 
 })
 
 privateMessagesM = new Map()
@@ -65,6 +67,13 @@ function onMessage(msgc){
 
                 case 'globalmsg':
                     $('#globalChat').append(`<p id="chat-user"> ${msgdata.message} </p>`)
+                    n = msgdata.message.match(/\[([^\]]+)\]/)
+
+                    if ($('#profile-name').text() == n[1]) {
+                        c = $('#globalChat').children()
+                        console.log(c[c.length-1])
+                    
+                    }
                 break
 
                 case 'newFriendReq':

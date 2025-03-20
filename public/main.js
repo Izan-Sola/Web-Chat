@@ -1,7 +1,35 @@
 
-$(document).ready(function () {
+function swapTheme(b) {
+            $('#theme').attr("href", `themes/theme${b}.css`)
+            switch (b) {
+                case 1:
+                    type="Purple"; break
+                case 2:
+                    type="Green"; break
+                case 3:
+                    type="Black"; break
+                case 4:
+                    type="Blue"; break
+                case 5: 
+                    type="Coffe"; break
+                case 6:
+                    type="Undecorated"; break
+            }
+            localStorage.setItem('theme', b+type)
+            $('#swap-theme').html(`Swap Theme (Current: ${type}`)
+}
 
-  
+//TODO: SAVE THEME PREFERENCE
+$(document).ready(function () {
+    type=localStorage.getItem('theme')
+    a=localStorage.getItem('theme')
+    if(a != null && a != undefined && a != NaN) {
+         swapTheme(a[0])
+    }
+    else {
+        localStorage.setItem('theme', 0)
+    }
+    b=0
 
     if ($.cookie('sessionkey') == undefined) {
        if(window.location.href == 'https://monthly-devoted-pug.ngrok-free.app/webchat.html') {
@@ -127,6 +155,7 @@ $(document).ready(function () {
                 $('#private-textarea').val('')
            
             break
+
         }
     });
 
@@ -195,7 +224,14 @@ $(document).ready(function () {
 
                 $('#notif-option1').val('Delete Message');
                 $('#notif-option2').val('Forward to Global (future feature not doing this soon)');
-                break             
+                break 
+                
+            
+            case 'swap-theme':
+                     b+=1
+                     if(b>6) b=1
+                     swapTheme(b)
+                break
     }
 
     parent = $(this).parent()
@@ -210,7 +246,7 @@ $(document).ready(function () {
      } })
 });
 
-function connectToServer(action, name, password, age, description, friend) {
+function connectToServer(action, name, password, age, description, friend, preferences) {
     fetch('https://monthly-devoted-pug.ngrok-free.app/databaseupdates', {
         method: 'POST',
         headers: {
@@ -223,7 +259,8 @@ function connectToServer(action, name, password, age, description, friend) {
             password: password,
             age: age,
             description: description,
-            friend: friend
+            friend: friend,
+            preferences: preferences
         })
     })
         .then(response => response.json())
@@ -291,7 +328,7 @@ function connectToServer(action, name, password, age, description, friend) {
                 case 'addFriend':
 
                     alert('New friend added successfully!')
-                    console.log(data.added)
+                   // console.log(data.added)
                     connectToServer('loadFriendList', username)
                     //window.location.reload()
                     break

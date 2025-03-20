@@ -1,0 +1,38 @@
+:root {
+    --c1: black; /* mostly borders */
+    --c2: none; /* msg, tabs bg? */
+    --c3: white; /* some bgs */
+    --c4: white; /* some bgs */
+    --c5: rgba(128, 128, 128, 0.137); /* notif bgs */
+    --c6: white; /* page bg */
+    --c7: rgba(59, 59, 59, 0.459); /* selected notif */
+    --c8: black; /* text color 1 */
+    --c9: black; /* text color 2 */
+    --c10: black; /* text color 3 */
+    --c11: gray; /* hover notif */
+    --c12: gray; /* hover options */
+}
+
+#globalChat, #globalchat-title, #notifications-section, 
+#notif-option1, #notif-option2, #options-menu {
+    border: 2px solid black !important;
+    border-radius: 0px !important;
+}
+#notifications-title, #notifications-tabs>ul {
+    border-bottom: 2px solid black !important;
+}
+#notifications-friendreq, #notifications-messages, #notifications-global {
+    li {
+        border-bottom: 2px solid black !important;
+        border-top: 2px solid black !important;
+    }
+}
+#chat-user {
+    border: none !important;
+}
+
+* {
+    font-weight: 600 !important;
+    font-family: 'Times New Roman', Times, serif !important;
+}
+/*undecorated theme*/

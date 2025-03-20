@@ -78,9 +78,8 @@ webSocketServer.on("request", function (req) {
         });
 
         connection.on("close", function () {
-         // console.log('Connection closed');
-
-           // connectionsListM.delete(connection)
+        
+        connectionsListM.delete(connection)
         });
     } else {
         req.reject();
@@ -197,11 +196,6 @@ async function dataBaseConnection(action, name, password, age, description, frie
                 await con.query('DELETE FROM friendrequests WHERE receiver = ?', [name])
             
                 return { added: 'holitest' }
-
-            case 'getSessionKey':
-
-            
-                break
         }
     } catch (err) {
         console.error('Database operation error:', err);
@@ -227,7 +221,7 @@ function sendNotification(type, notif, friend) {
 
 app.post('/databaseupdates', async (req, res) => {
     const clientIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    const { action, name, password, age, description, friend } = req.body;
+    const { action, name, password, age, description, friend} = req.body;
     const result = await dataBaseConnection(action, name, password, age, description, friend, clientIP);
     res.json(result);
 });

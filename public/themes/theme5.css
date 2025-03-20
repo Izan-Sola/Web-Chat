@@ -1,0 +1,14 @@
+:root {
+    --c1: rgb(80, 50, 20); /* mostly borders */
+    --c2: rgb(140, 100, 60); /* msg, tabs bg? */
+    --c3: rgb(180, 140, 100); /* some bgs */
+    --c4: rgb(160, 120, 80); /* some bgs */
+    --c5: rgb(200, 170, 130); /* notif bgs */
+    --c6: rgb(230, 210, 180); /* page bg */
+    --c7: rgb(190, 150, 110); /* selected notif */
+    --c8: rgb(40, 30, 20); /* text color 1 */
+    --c9: rgb(90, 60, 40); /* text color 2 */
+    --c10: rgb(20, 15, 10); /* text color 3 */
+    --c11: rgba(190, 140, 100, 0.438); /* hover notif */
+    --c12: rgba(160, 120, 90, 0.438); /* hover options */
+}
