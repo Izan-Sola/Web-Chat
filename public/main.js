@@ -135,11 +135,13 @@ $(document).ready(function () {
                 $('#friendlist-section').css({display: 'none'})
 
                 selectedFriend = $('.selected .friend-name').text()
-
+                                
+                //Open private chat of the selected friend and load the temp list of messages with that user if it exists.
+                                
                 privMsgsList = getDMs(selectedFriend.trim())
                 console.log(privMsgsList)
                 $('#privateChat').html('')
-
+                
                 if(privMsgsList != 'none') {
                     $.each(privMsgsList, function (index, element) { 
                         console.log('')
@@ -152,6 +154,7 @@ $(document).ready(function () {
             break
 
             case 'send-privatemsg':
+                //Append the message with the correct alignment and add it to the temp message list of dms with that user.
                 text = $('#private-textarea').val()
                 if (text == '') return
                 $('#privateChat').append('<p id="chat-user"> &nbsp;' + ` [${username}]  -->  ${text} </p>`)
@@ -169,8 +172,10 @@ $(document).ready(function () {
 
     $(document).on('mouseup', 'p', function (evt) {
         evt.stopPropagation()
-        stranger = $(this).text().match(/\[([^\]]+)\]/)
+                
         //Load and display the stranger profile.
+                
+        stranger = $(this).text().match(/\[([^\]]+)\]/)                
         if (stranger[1] != username) {
             $('#profiles-section').css({display: 'block'})
             $('#friendlist-section').css({display: 'none'})
@@ -372,5 +377,6 @@ function connectToServer(action, name, password, age, description, friend, prefe
 
         });
 }
+
 
 
