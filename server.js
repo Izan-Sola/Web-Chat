@@ -119,7 +119,7 @@ async function dataBaseConnection(action, name, password, age, description, frie
             case 'checkLoginCredentials':
 
                 message = 'LOGIN SUCCESSFUL!'
-
+         
                 const [pass] = await con.query('SELECT password FROM users WHERE username = ?', [name])
                 const key = await con.query('SELECT sessionkey FROM users WHERE username = ?', [name])
               
@@ -127,11 +127,16 @@ async function dataBaseConnection(action, name, password, age, description, frie
                     message = 'USER DOESNT EXIST'
                 }
                 else {
+                    //?????????????????????????????
+                    //why the fuck is pass an array, idk, gotta change it
                     pass.forEach(element => {
                         if (element.password != password) {
                             message = 'INCORRECT PASSWORD'
                         }
                     });
+                    //if(pass != password) {
+                    // message = 'INCORRECT PASSWORD'
+                    //}
                 }
                 return { message: message, sessionKey: key }
 
@@ -224,4 +229,5 @@ app.post('/databaseupdates', async (req, res) => {
     const { action, name, password, age, description, friend} = req.body;
     const result = await dataBaseConnection(action, name, password, age, description, friend, clientIP);
     res.json(result);
+
 });
