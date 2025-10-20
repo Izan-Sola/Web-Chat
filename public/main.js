@@ -170,13 +170,14 @@ $(document).ready(function () {
     $(document).on('mouseup', 'p', function (evt) {
         evt.stopPropagation()
         stranger = $(this).text().match(/\[([^\]]+)\]/)
+        //Load and display the stranger profile.
         if (stranger[1] != username) {
             $('#profiles-section').css({display: 'block'})
             $('#friendlist-section').css({display: 'none'})
             $('#privatechat-section').css({display: 'none'})
             connectToServer('loadStrangerProfile', stranger[1], '', '', '')
         }
-
+       //Enable or disable the friend request button depending on wether the stranger is already your friend or not.
         if (friends.includes(stranger[1])) {
             $('#send-friendreq').attr('disabled', true);
         } else {
@@ -371,3 +372,4 @@ function connectToServer(action, name, password, age, description, friend, prefe
 
         });
 }
+
