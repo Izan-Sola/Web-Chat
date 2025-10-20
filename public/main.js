@@ -112,9 +112,9 @@ $(document).ready(function () {
                 break
 
             case 'notif-option1':
-                //decline request
+                
             case 'notif-option2':
-
+                
                 option = $(this).val()
                 
                 if (option == 'Accept Request') {
@@ -372,4 +372,5 @@ function connectToServer(action, name, password, age, description, friend, prefe
 
         });
 }
+
 
